@@ -1,11 +1,9 @@
 <script>
-    import Header from "$lib/components/header.svelte";
-    import AuthForm from "$lib/components/forms/authForm.svelte";
+    import PointsForm from "$lib/components/forms/pointsForm.svelte";
 </script>
 
 <div class="wrapper">
-    <Header/>
-    <AuthForm />
+    <PointsForm/>
 </div>
 
 <style>

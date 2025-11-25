@@ -1,11 +1,11 @@
 <script>
 	import Textfield from "@smui/textfield";
-	let { value, label, type=""} = $props();
+	import HelperText from "@smui/textfield/helper-text";
+	let {helperText="", value= $bindable(""), ...props} = $props();
 </script>
 
-<Textfield 
-	variant="outlined"
- 	bind:value 
-	label={label}
-	type={type}>
+<Textfield variant="outlined" bind:value={value} {...props}>
+	{#snippet helper()}
+		<HelperText>{helperText}</HelperText>
+	{/snippet}
 </Textfield>

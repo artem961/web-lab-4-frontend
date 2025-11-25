@@ -10,8 +10,7 @@
     </div>
     <div class="fields">
         <TextInputField value="" label="Имя"></TextInputField>
-        <TextInputField value="" label="Пароль" type="password"
-        ></TextInputField>
+        <TextInputField value="" label="Пароль" type="password"></TextInputField>
     </div>
     <div class="buttons">
         <Button variant="raised">
