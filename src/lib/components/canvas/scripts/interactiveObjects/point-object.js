@@ -1,0 +1,54 @@
+import { InteractiveObject } from './interactive-object'
+import { Point } from '../tools/graphics';
+import { Position } from '../tools/graphics';
+
+
+class PointObject extends InteractiveObject {
+    constructor(canvas, x, y, r) {
+        super(canvas);
+        this.x = x;
+        this.y = y;
+        this.r = r
+
+        this.hitColor = 'rgb(61,255,77)';
+        this.missedColor = 'rgb(253,61,61)';
+        this.hit = false;
+
+        this.currentR = this.r;
+    }
+
+    draw() {
+        if (this.hit){
+            this.context.fillStyle = this.hitColor;
+        } else{
+            this.context.fillStyle = this.missedColor;
+        }
+        const scale = (this.r / this.currentR);
+        let convertedX = this.x * canvas.width/3 * scale;
+        let convertedY = this.y * canvas.height/3 * scale;
+
+        let point = new Point(new Position(convertedX, convertedY).convert(canvas))
+        point.draw(this.context, 3);
+    }
+
+    checkPositionInObject(position) {
+        const x = position.x;
+        const y = position.y;
+        return (x >= this.x && x <= this.x + this.width) && (y >= this.y && y <= this.y + this.height);
+    }
+
+    setHit(isHit){
+        this.hit = isHit;
+    }
+
+    setCurrentR(currentR){
+        this.currentR = currentR;
+    }
+}
+
+function createPoint(canvas, x, y, r, result){
+    let point = new PointObject(canvas, x, y, r);
+    point.setHit(result);
+
+    return point;
+}

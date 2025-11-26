@@ -1,12 +1,10 @@
-<script>
+<script lang="ts">
     import NumberInputField from "./inputs/numberInputField.svelte";
     import InputButton from "./inputs/inputButton.svelte";
     import Button, { Group, Label } from "@smui/button";
+    import InputButtonsGroup from "./inputs/inputButtonsGroup.svelte";
 
-    let xValues = [-4, -3, -2, -1, 0, 1, 2, 3, 4];
-    let x = $state(0);
-    let y = $state(0);
-    let r = $state(0);
+   let {x=$bindable(), y=$bindable()} = $props(); 
 </script>
 
 <div class="wrapper">
@@ -17,21 +15,7 @@
         </div>
         <div class="fields">
             <div class="x-buttons">
-                {#each [0, 1, 2] as row}
-                    <div class="x-buttons-row">
-                        <Group variant="outlined">
-                            {#each xValues.slice(row * 3, row * 3 + 3) as xVal}
-                                <InputButton
-                                    label={xVal}
-                                    variant="outlined"
-                                    onclick={() => {
-                                        x = xVal;
-                                    }}
-                                ></InputButton>
-                            {/each}
-                        </Group>
-                    </div>
-                {/each}
+                <InputButtonsGroup rangeOfValues={[-4, -3, -2, -1, 0, 1, 2, 3, 4]} columns={3} onSelectExecuteFunction={(value: number) => {x=value}}></InputButtonsGroup>
             </div>
 
             <NumberInputField
