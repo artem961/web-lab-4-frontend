@@ -1,15 +1,10 @@
 <script>
     import Canvas from "$lib/components/canvas/canvas.svelte";
     import PointsForm from "$lib/components/forms/pointsForm.svelte";
-    import InputButtonsGroup from "$lib/components/forms/inputs/inputButtonsGroup.svelte";
 
     let x = $state(0);
     let y = $state(0);
     let r = $state(1);
-
-    setTimeout(()=>{
-        console.log(x, y, r);
-    }, 2000)
 </script>
 
 <div class="wrapper">
@@ -25,7 +20,7 @@
 <style>
     .wrapper {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 4rem;
     }
 </style>

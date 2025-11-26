@@ -1,32 +1,30 @@
 <script lang="ts">
 	import Textfield from "@smui/textfield";
 	import HelperText from "@smui/textfield/helper-text";
-	let {helperText="", value=$bindable(0), ...props} = $props();
+	let { helperText = "", value = $bindable(0), ...props } = $props();
 	let messageText = $state(helperText);
 
-	function isValidFloat(number: string): boolean{
+	function isValidFloat(number: string): boolean {
 		return /^-?\d*\.?\d+$/.test(number);
 	}
 
 	$effect(() => {
-		if (!isValidFloat(value.toString())){
+		if (!isValidFloat(value.toString())) {
 			messageText = "Значение должно быть числом!";
-		}
-		else if (props.max && value > props.max){
+		} else if (props.max && value > props.max) {
 			messageText = "Значение должно быть меньше " + props.max;
-		}
-	 	else if (props.min && value < props.min){
+		} else if (props.min && value < props.min) {
 			messageText = "Значение должно быть больше " + props.min;
-		} 
-		else {
+		} else {
 			messageText = helperText;
 		}
 	});
 </script>
 
-<Textfield variant="outlined" bind:value={value} {...props}>
-	{#snippet helper()}
-		<HelperText>{messageText}</HelperText>
-	{/snippet}
-</Textfield>
-
+<div>
+	<Textfield variant="outlined" bind:value {...props}>
+		{#snippet helper()}
+			<HelperText>{messageText}</HelperText>
+		{/snippet}
+	</Textfield>
+</div>
