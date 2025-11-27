@@ -41,13 +41,15 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        width: 100%;
     }
 
     .fields {
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        width: 25%;
+        width: 100%;
+        align-items: center;
     }
 
     .buttons {
@@ -57,6 +59,7 @@
         display: flex;
         flex-direction: column;
         gap: 4rem;
+        width: 100%;
     }
 
     .x-buttons {

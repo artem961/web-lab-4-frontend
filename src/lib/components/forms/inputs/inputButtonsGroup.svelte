@@ -12,7 +12,7 @@
 
 <div class="buttons">
     {#each rows as row}
-        <div class="x-buttons-row">
+        <div class="buttons-row">
             <Group variant="outlined">
                 {#each rangeOfValues.slice(row, row + columns) as val}
                     <InputButton
@@ -28,3 +28,8 @@
         </div>
     {/each}
 </div>
+
+<style>
+    .button-row{
+    }
+</style>
