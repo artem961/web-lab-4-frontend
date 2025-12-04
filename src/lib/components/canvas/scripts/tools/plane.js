@@ -11,7 +11,7 @@ export class Plane {
     constructor(canvasController, R) {
         this.canvasController = canvasController;
         this.canvas = canvasController.getCanvas();
-        this.context = canvas.getContext('2d');
+        this.context = this.canvas.getContext('2d');
         this.R = R;
 
         this.rLabels = null;
@@ -23,31 +23,31 @@ export class Plane {
     addPoint(point){
         point.setCurrentR(this.R);
         this.points.push(point);
-        canvasController.addObject(point);
+        this.canvasController.addObject(point);
     }
 
     clearPoints(){
-        canvasController.removeObjects(this.points);
+        this.canvasController.removeObjects(this.points);
         this.points = [];
     }
 
     initObjects(){
         let R = this.R;
 
-        let hWidth = canvas.width / 2;
-        let hHeight = canvas.height / 2;
-        let widthR = canvas.width/3;
-        let heightR = canvas.height/3;
+        let hWidth = this.canvas.width / 2;
+        let hHeight = this.canvas.height / 2;
+        let widthR = this.canvas.width/3;
+        let heightR = this.canvas.height/3;
         let shift = 10;
 
-        let grid = new Grid(canvas);
-        let axis = new Axis(canvas);
-        let rect = new RectangleZone(canvas, -widthR, -heightR, widthR, heightR);
-        let triangle = new TriangleZone(canvas,
+        let grid = new Grid(this.canvas);
+        let axis = new Axis(this.canvas);
+        let rect = new RectangleZone(this.canvas, -widthR, -heightR, widthR, heightR);
+        let triangle = new TriangleZone(this.canvas,
             new Position(0, 0),
             new Position(widthR, 0),
             new Position(0, heightR));
-        let sector = new SectorZone(canvas,
+        let sector = new SectorZone(this.canvas,
             new Position(0, 0),
             widthR/2,
             Math.PI / 2,
@@ -71,8 +71,8 @@ export class Plane {
         this.canvasController.addObject(sector);
         this.canvasController.addObject(axis);
         this.canvasController.addObjects(this.points);
-        this.canvasController.addObject(new LabelObject(canvas, new Position(shift,  hHeight -shift*1.5), "Y"));
-        this.canvasController.addObject(new LabelObject(canvas, new Position(hWidth -shift*1.5, shift), "X"));
+        this.canvasController.addObject(new LabelObject(this.canvas, new Position(shift,  hHeight -shift*1.5), "Y"));
+        this.canvasController.addObject(new LabelObject(this.canvas, new Position(hWidth -shift*1.5, shift), "X"));
         this.canvasController.addObjects(this.rLabels);
     }
 
@@ -119,19 +119,19 @@ export class Plane {
     }
 
     _initRLabels(R, shift){
-        let widthR = canvas.width/3;
-        let heightR = canvas.height/3;
+        let widthR = this.canvas.width/3;
+        let heightR = this.canvas.height/3;
 
         if (R !== String("R")) {
             return [
-                new LabelObject(canvas, new Position(shift, heightR), String(R)),
-                new LabelObject(canvas, new Position(shift, -heightR), String(-R)),
-                new LabelObject(canvas, new Position(shift, heightR / 2), String(R / 2)),
-                new LabelObject(canvas, new Position(shift, -heightR / 2), String(-R / 2)),
-                new LabelObject(canvas, new Position(widthR, shift), String(R)),
-                new LabelObject(canvas, new Position(-widthR, shift), String(-R)),
-                new LabelObject(canvas, new Position(widthR / 2, shift), String(R / 2)),
-                new LabelObject(canvas, new Position(-widthR / 2, shift), String(-R / 2))
+                new LabelObject(this.canvas, new Position(shift, heightR), String(R)),
+                new LabelObject(this.canvas, new Position(shift, -heightR), String(-R)),
+                new LabelObject(this.canvas, new Position(shift, heightR / 2), String(R / 2)),
+                new LabelObject(this.canvas, new Position(shift, -heightR / 2), String(-R / 2)),
+                new LabelObject(this.canvas, new Position(widthR, shift), String(R)),
+                new LabelObject(this.canvas, new Position(-widthR, shift), String(-R)),
+                new LabelObject(this.canvas, new Position(widthR / 2, shift), String(R / 2)),
+                new LabelObject(this.canvas, new Position(-widthR / 2, shift), String(-R / 2))
             ];
         } else{
             return [

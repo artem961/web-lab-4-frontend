@@ -3,7 +3,7 @@ import { Point } from '../tools/graphics';
 import { Position } from '../tools/graphics';
 
 
-class PointObject extends InteractiveObject {
+export class PointObject extends InteractiveObject {
     constructor(canvas, x, y, r) {
         super(canvas);
         this.x = x;
@@ -46,7 +46,7 @@ class PointObject extends InteractiveObject {
     }
 }
 
-function createPoint(canvas, x, y, r, result){
+export function createPoint(canvas, x, y, r, result){
     let point = new PointObject(canvas, x, y, r);
     point.setHit(result);
 
