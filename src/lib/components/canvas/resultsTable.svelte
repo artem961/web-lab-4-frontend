@@ -1,18 +1,10 @@
 <script lang="ts">
+    import type { CheckResult } from "$lib/api/interfaces";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
-
-  interface ResultRow {
-    x: number;
-    y: number;
-    r: number;
-    result: boolean;
-    time: string;
-    current_time: string;
-  }
 
   const headers = ["x", "y", "r", "Результат", "Время вычисления", "Время"];
 
-  let { tableData }: { tableData: ResultRow[] } = $props();
+  let { tableData }: { tableData: CheckResult[] } = $props();
 </script>
 
 <DataTable table$aria-label="People list" style="max-width: 100%;">

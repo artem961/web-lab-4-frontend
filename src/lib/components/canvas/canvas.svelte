@@ -4,13 +4,11 @@
     import { CanvasController } from "./scripts/tools/canvas-controller";
     import { Plane } from "./scripts/tools/plane";
     import InputButtonsGroup from "../forms/inputs/inputButtonsGroup.svelte";
-
     import { checkHit } from "$lib/api/api";
-    import type { Position } from "./scripts/tools/graphics";
     import type { CheckResult } from "$lib/api/interfaces";
     import { createPoint } from "./scripts/interactiveObjects/point-object";
 
-    let { r = $bindable() } = $props();
+    let { r = $bindable(), results } = $props();
     let selectFunction = () => {};
 
     onMount(() => {
@@ -30,8 +28,8 @@
                 event,
                 canvas,
             );
-            let x = (position.x / (canvas.width / 3) * plane.R).toFixed(2);
-            let y = (position.y / (canvas.height / 3) * plane.R).toFixed(2);
+            let x = ((position.x / (canvas.width / 3)) * plane.R).toFixed(2);
+            let y = ((position.y / (canvas.height / 3)) * plane.R).toFixed(2);
             let res = checkHit({ x: x, y: y, r: r });
 
             console.log(res);
@@ -43,13 +41,21 @@
                             result.result.x,
                             result.result.y,
                             result.result.r,
-                            result.result,
+                            result.result.result,
                         ),
                     );
                     canvasController.updateFrame();
+
+                    results.push({
+                        x: result.result.x,
+                        y: result.result.y,
+                        r: result.result.r,
+                        result: result.result.result,
+                        time: result.result.time,
+                        current_time: result.result.current_time
+                    });
                 }
             });
-
         });
     });
 </script>
