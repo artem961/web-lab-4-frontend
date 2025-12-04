@@ -1,12 +1,10 @@
 <script>
     import Header from "$lib/components/header.svelte";
-    import AuthForm from "$lib/components/forms/authForm.svelte";
+    import RegForm from "$lib/components/forms/regForm.svelte";
 </script>
 
 <div class="wrapper">
-    <Header/>
-    <AuthForm />
-    <a href="/registration">регайся</a>
+    <RegForm />
 </div>
 
 <style>

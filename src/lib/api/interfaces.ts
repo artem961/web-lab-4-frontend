@@ -23,3 +23,19 @@ export interface FetchResult<T>{
     result: T | null,
     error: Error | null
 }
+
+export interface AuthUserData{
+    username: string,
+    password: string
+}
+
+export interface RegisterUserData{
+    username: string,
+    password: string
+}
+
+
+export interface AuthResult{
+    access_token: string,
+    token_type: string
+}

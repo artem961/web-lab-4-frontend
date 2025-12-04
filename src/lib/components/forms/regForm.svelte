@@ -5,6 +5,7 @@
 
     let username = $state("");
     let password = $state("")
+    let passwordRetype = $state("")
 
 </script>
 
@@ -16,9 +17,10 @@
     <div class="fields">
         <TextInputField bind:value={username} label="Имя"></TextInputField>
         <TextInputField bind:value={password} label="Пароль" type="password"></TextInputField>
+        <TextInputField bind:value={passwordRetype} label="Повторите пароль" type="password"></TextInputField>
     </div>
     <div class="buttons">
-        <Button variant="raised" onclick={() => {login({username: username, password: password})}}>
+        <Button variant="raised" onclick={() => {register({username: username, password: password})}}>
             <Label>Войти</Label>
         </Button>
     </div>

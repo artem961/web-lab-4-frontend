@@ -3,8 +3,6 @@ const api = "http://localhost:8080/backend/api/";
 export async function handle({ event, resolve }) {
    if (event.url.pathname.startsWith("/api/")) {
         const redirectUrl = api + event.url.pathname.replace("/api/", "");
-
-		console.log(redirectUrl)
         
         try {
             const response = await event.fetch(redirectUrl, {
