@@ -6,6 +6,7 @@ export async function checkHit(dot: Dot): Promise<FetchResult<CheckResult>> {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': getAutorizationHeader()
         },
         body: JSON.stringify(dot),
     });
@@ -93,4 +94,10 @@ export async function register(user: RegisterUserData): Promise<FetchResult<Auth
             }
         };
     }
+}
+
+function getAutorizationHeader(){
+    let token = localStorage.getItem("access_token");
+    let tokenType = localStorage.getItem("token_type");
+    return tokenType + " " + token;
 }

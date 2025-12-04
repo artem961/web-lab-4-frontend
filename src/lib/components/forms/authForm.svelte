@@ -6,6 +6,19 @@
     let username = $state("");
     let password = $state("")
 
+    function loginUser(){
+        let result = login({username: username, password: password});
+        result
+        .then((result) => {
+            let token = result.result?.access_token;
+            let tokenType = result.result?.token_type;
+
+            localStorage.setItem("access_token", token??"");
+            localStorage.setItem("token_type", tokenType??"");
+        })
+        
+    }
+
 </script>
 
 
@@ -18,7 +31,7 @@
         <TextInputField bind:value={password} label="Пароль" type="password"></TextInputField>
     </div>
     <div class="buttons">
-        <Button variant="raised" onclick={() => {login({username: username, password: password})}}>
+        <Button variant="raised" onclick={() => {loginUser()}}>
             <Label>Войти</Label>
         </Button>
     </div>
