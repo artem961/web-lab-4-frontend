@@ -28,9 +28,9 @@
                 event,
                 canvas,
             );
-            let x = ((position.x / (canvas.width / 3)) * plane.R).toFixed(2);
-            let y = ((position.y / (canvas.height / 3)) * plane.R).toFixed(2);
-            let res = checkHit({ x: x, y: y, r: r });
+            let x = Number(((position.x / (canvas.width / 3)) * plane.R).toFixed(2));
+            let y = Number(((position.y / (canvas.height / 3)) * plane.R).toFixed(2));
+            let res = checkHit({x: x, y: y, r: r });
 
             console.log(res);
             res.then((result) => {
@@ -38,8 +38,8 @@
                     plane.addPoint(
                         createPoint(
                             canvas,
-                            result.result.x,
-                            result.result.y,
+                            result.result.x / result.result.r,
+                            result.result.y / result.result.r,
                             result.result.r,
                             result.result.result,
                         ),
