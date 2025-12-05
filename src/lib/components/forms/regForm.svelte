@@ -25,7 +25,7 @@
 
                     localStorage.setItem("access_token", token ?? "");
                     localStorage.setItem("token_type", tokenType ?? "");
-                    window.location.href = "/canvas"
+                    window.location.href = "/canvas";
                 } else if (result.error) {
                     errorMessage = result.error.error_message;
                 } else {
@@ -41,15 +41,22 @@
         <h1>Registration</h1>
     </div>
     <div class="fields">
-        <TextInputField bind:value={username} label="Name"></TextInputField>
-        <TextInputField bind:value={password} label="Password" type="password"
-        ></TextInputField>
-        <TextInputField
-            bind:value={passwordRetype}
-            label="Retype password"
-            type="password"
-        ></TextInputField>
-        <p>{errorMessage}</p>
+        <div class="inputs">
+            <TextInputField bind:value={username} label="Name"></TextInputField>
+            <TextInputField
+                bind:value={password}
+                label="Password"
+                type="password"
+            ></TextInputField>
+            <TextInputField
+                bind:value={passwordRetype}
+                label="Retype password"
+                type="password"
+            ></TextInputField>
+        </div>
+        <div class="error-message">
+            <p>{errorMessage}</p>
+        </div>
     </div>
     <div class="buttons">
         <Button
@@ -77,7 +84,20 @@
         gap: 1rem;
         width: 25%;
     }
-
     .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .error-message {
+        text-align: center;
+    }
+
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
     }
 </style>

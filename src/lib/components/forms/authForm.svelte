@@ -16,11 +16,11 @@
 
                 localStorage.setItem("access_token", token ?? "");
                 localStorage.setItem("token_type", tokenType ?? "");
-                window.location.href = "/canvas"
-            } else if (result.error){
+                window.location.href = "/canvas";
+            } else if (result.error) {
                 errorMessage = result.error.error_message;
             } else {
-                errorMessage = "Failed to create request"
+                errorMessage = "Failed to create request";
             }
         });
     }
@@ -31,10 +31,17 @@
         <h1>Sign in</h1>
     </div>
     <div class="fields">
-        <TextInputField bind:value={username} label="Name"></TextInputField>
-        <TextInputField bind:value={password} label="Password" type="password"
-        ></TextInputField>
-        <p>{errorMessage}</p>
+        <div class="inputs">
+            <TextInputField bind:value={username} label="Name"></TextInputField>
+            <TextInputField
+                bind:value={password}
+                label="Password"
+                type="password"
+            ></TextInputField>
+        </div>
+        <div class="error-message">
+            <p>{errorMessage}</p>
+        </div>
     </div>
     <div class="buttons">
         <Button
@@ -44,6 +51,14 @@
             }}
         >
             <Label>Sign in</Label>
+        </Button>
+        <Button
+            variant="link"
+            onclick={() => {
+                window.location.href = "/registration";
+            }}
+        >
+            <Label>Registration</Label>
         </Button>
     </div>
 </form>
@@ -59,10 +74,23 @@
     .fields {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
         width: 25%;
     }
 
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+
     .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .error-message{
+        text-align: center;
     }
 </style>

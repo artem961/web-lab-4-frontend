@@ -6,7 +6,6 @@
 <div class="wrapper">
     <Header/>
     <AuthForm />
-    <a href="/registration">регайся</a>
 </div>
 
 <style>
@@ -14,5 +13,10 @@
         display: flex;
         flex-direction: column;
         gap: 4rem;
+    }
+
+    .link{
+        width: 100%;
+        
     }
 </style>
