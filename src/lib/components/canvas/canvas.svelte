@@ -4,19 +4,40 @@
     import { CanvasController } from "./scripts/tools/canvas-controller";
     import { Plane } from "./scripts/tools/plane";
     import InputButtonsGroup from "../forms/inputs/inputButtonsGroup.svelte";
-    import { checkHit } from "$lib/api/api";
-    import type { CheckResult } from "$lib/api/interfaces";
+    import { checkHit, getAllResults } from "$lib/api/api";
+    import type { CheckResult, FetchResult } from "$lib/api/interfaces";
     import { createPoint } from "./scripts/interactiveObjects/point-object";
 
     let { r = $bindable(), results } = $props();
     let selectFunction = () => {};
+    let canvas;
 
     onMount(() => {
-        const canvas = document.getElementById("canvas");
         const canvasController = new CanvasController(canvas);
 
         let plane = new Plane(canvasController, r);
         plane.initObjects();
+
+        if (results.length === 0){
+            let res = getAllResults();
+        res
+        .then((data: FetchResult<CheckResult[]>) => {
+            results = data.result ? data.result : [];
+        })
+        }
+
+        results.forEach((result: CheckResult) => {
+            plane.addPoint(
+                createPoint(
+                    canvas,
+                    result.x / result.r,
+                    result.y / result.r,
+                    result.r,
+                    result.result,
+                ),
+            );
+        });
+
         canvasController.updateFrame();
 
         selectFunction = () => {
@@ -28,9 +49,13 @@
                 event,
                 canvas,
             );
-            let x = Number(((position.x / (canvas.width / 3)) * plane.R).toFixed(2));
-            let y = Number(((position.y / (canvas.height / 3)) * plane.R).toFixed(2));
-            let res = checkHit({x: x, y: y, r: r });
+            let x = Number(
+                ((position.x / (canvas.width / 3)) * plane.R).toFixed(2),
+            );
+            let y = Number(
+                ((position.y / (canvas.height / 3)) * plane.R).toFixed(2),
+            );
+            let res = checkHit({ x: x, y: y, r: r });
 
             console.log(res);
             res.then((result) => {
@@ -52,7 +77,7 @@
                         r: result.result.r,
                         result: result.result.result,
                         time: result.result.time,
-                        current_time: result.result.current_time
+                        current_time: result.result.current_time,
                     });
                 }
             });
@@ -62,7 +87,7 @@
 
 <div class="canvas-wrapper">
     <div id="canvas-container">
-        <canvas id="canvas" width="400" height="400"></canvas>
+        <canvas bind:this={canvas} id="canvas" width="400" height="400"></canvas>
     </div>
     <div class="buttons">
         <InputButtonsGroup

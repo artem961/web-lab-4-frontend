@@ -96,6 +96,44 @@ export async function register(user: RegisterUserData): Promise<FetchResult<Auth
     }
 }
 
+export async function getAllResults(): Promise<FetchResult<CheckResult[]>> {
+
+    const response = await fetch("/api/dots/all", {
+        method: "GET",
+        headers: {
+            'Authorization': getAutorizationHeader()
+        }});
+
+    if (response.ok) {
+        let result = await response.json();
+        let resultsArray: CheckResult[] = []
+
+        result.forEach(result => {
+            resultsArray.push({
+                x: result.x,
+                y: result.y,
+                r: result.r,
+                result: result.result,
+                time: result.time,
+                current_time: result.currentTime
+            })
+        });
+        return {
+            result: resultsArray,
+            error: null
+        };
+    } else {
+        return {
+            result: null,
+            error: {
+                status_code: response.status,
+                status_text: response.statusText,
+                error_message: await response.text().catch(() => 'Unknown error')
+            }
+        };
+    }
+}
+
 function getAutorizationHeader(){
     let token = localStorage.getItem("access_token");
     let tokenType = localStorage.getItem("token_type");

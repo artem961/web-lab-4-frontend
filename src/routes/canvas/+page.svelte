@@ -2,33 +2,35 @@
     import Canvas from "$lib/components/canvas/canvas.svelte";
     import PointsForm from "$lib/components/forms/pointsForm.svelte";
     import Table from "$lib/components/canvas/resultsTable.svelte";
-    import type { CheckResult } from "$lib/api/interfaces";
+    import type { CheckResult, FetchResult } from "$lib/api/interfaces";
+    import { getAllResults } from "$lib/api/api";
+    import { onMount } from "svelte";
 
     let x = $state(0);
     let y = $state(0);
     let r = $state(1);
 
-    let tableResults: CheckResult[] =$state([{
-                "x": 1,
-                "y": 2,
-                "r": 3,
-                "result": true,
-                "time": "1488",
-                "current_time": "12:00"
-            }]);
+    let results: CheckResult[] =$state([]);
+    onMount(()=>{
+        let res = getAllResults();
+        res
+        .then((data: FetchResult<CheckResult[]>) => {
+            results = data.result ? data.result : [];
+        })
+    })
 </script>
 
 <div class="wrapper">
     <div class="canvas-column">
-        <Canvas bind:r results={tableResults}/>
+        <Canvas bind:r results={results}/>
     </div>
     <div class="table-column">
         <Table
-            tableData={tableResults}
+            tableData={results}
         ></Table>
     </div>
     <div class="menu-column">
-        <PointsForm bind:x bind:y bind:r results={tableResults}/>
+        <PointsForm bind:x bind:y bind:r results={results}/>
     </div>
 </div>
 
