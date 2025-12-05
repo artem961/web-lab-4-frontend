@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import "./scripts/importAllScripts";
     import { CanvasController } from "./scripts/tools/canvas-controller";
     import { Plane } from "./scripts/tools/plane";
     import InputButtonsGroup from "../forms/inputs/inputButtonsGroup.svelte";
@@ -19,7 +18,6 @@
 
     onMount(() => {
         const canvasController = new CanvasController(canvasElement);
-
         let plane = new Plane(canvasController, r);
         plane.initObjects();
 

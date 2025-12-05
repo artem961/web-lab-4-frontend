@@ -10,11 +10,11 @@
 
 	$effect(() => {
 		if (!isValidFloat(value.toString())) {
-			messageText = "Значение должно быть числом!";
+			messageText = "Value must be a number";
 		} else if (props.max && value > props.max) {
-			messageText = "Значение должно быть меньше " + props.max;
+			messageText = "Value must be lower then " + props.max;
 		} else if (props.min && value < props.min) {
-			messageText = "Значение должно быть больше " + props.min;
+			messageText = "Value must be greater then " + props.min;
 		} else {
 			messageText = helperText;
 		}

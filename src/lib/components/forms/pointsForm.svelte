@@ -32,9 +32,9 @@
 
 <div class="wrapper">
     <form>
-        <p>Выбрана точка x: {x} y: {y}</p>
+        <p>Selected point:  x: {x} y: {y}</p>
         <div class="title">
-            <h1>Выбор точки</h1>
+            <h1>Point selection</h1>
         </div>
         <div class="fields">
             <div class="x-buttons">
@@ -51,7 +51,7 @@
                 variant="outlined"
                 bind:value={y}
                 label="Y"
-                helperText="от -3 до 3"
+                helperText="from -3 to 3"
                 min={-3}
                 max={3}
             ></NumberInputField>
@@ -63,7 +63,7 @@
                     sendPoint();
                 }}
             >
-                <Label>Отправить</Label>
+                <Label>Check</Label>
             </Button>
         </div>
     </form>

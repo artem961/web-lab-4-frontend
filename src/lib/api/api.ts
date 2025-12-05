@@ -66,6 +66,14 @@ export async function login(user: AuthUserData): Promise<FetchResult<AuthResult>
     }
 }
 
+export async function logout() {
+    const response = await fetch("/api/auth/logout", {
+        method: "POST",
+    });
+
+    localStorage.clear();
+}
+
 export async function register(user: RegisterUserData): Promise<FetchResult<AuthResult>> {
     const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -133,6 +141,17 @@ export async function getAllResults(): Promise<FetchResult<CheckResult[]>> {
         };
     }
 }
+
+export async function deleteAllResults() {
+
+    const response = await fetch("/api/dots/all", {
+        method: "DELETE",
+        headers: {
+            'Authorization': getAutorizationHeader()
+        }});
+}
+
+
 
 function getAutorizationHeader(){
     let token = localStorage.getItem("access_token");
