@@ -8,28 +8,62 @@
     import type { CheckResult, FetchResult } from "$lib/api/interfaces";
     import { createPoint } from "./scripts/interactiveObjects/point-object";
 
-    let { r = $bindable(), results } = $props();
+    let { r = $bindable(), results = $bindable() } = $props();
+
+    let canvasElement: HTMLCanvasElement;
+    let canvasController: CanvasController | null = null;
+    let plane: Plane | null = null;
+
     let selectFunction = () => {};
-    let canvas;
+     
 
     onMount(() => {
-        const canvasController = new CanvasController(canvas);
+        const canvasController = new CanvasController(canvasElement);
 
         let plane = new Plane(canvasController, r);
         plane.initObjects();
 
-        if (results.length === 0){
-            let res = getAllResults();
-        res
-        .then((data: FetchResult<CheckResult[]>) => {
-            results = data.result ? data.result : [];
-        })
-        }
+        canvasElement.addEventListener("click", (event) => handleCanvasClick(event));
 
-        results.forEach((result: CheckResult) => {
+        canvasController.updateFrame();
+
+        selectFunction = () => {
+            plane.switchLabels(r);
+        };
+
+        function addPointToResults(result: CheckResult) {
+        if (!plane || !canvasElement) return;
+        
+        results.push(result);
+        
+        canvasController?.updateFrame();
+    }
+
+    async function handleCanvasClick(event: MouseEvent) {
+        if (!canvasController || !plane || !canvasElement) return;
+        
+        const position = CanvasController.getCursorPositionOnCanvas(event, canvasElement);
+        const x = Number(((position.x / (canvasElement.width / 3)) * plane.R).toFixed(2));
+        const y = Number(((position.y / (canvasElement.height / 3)) * plane.R).toFixed(2));
+        
+        try {
+            const response = await checkHit({ x, y, r });
+            
+            if (response.result) {
+                addPointToResults(response.result);
+            }
+        } catch (error) {
+            console.error('Error checking hit:', error);
+        }
+    }
+
+    $effect(()=>{
+        plane.clearPoints();
+
+         results.forEach((result: CheckResult) => {
             plane.addPoint(
                 createPoint(
-                    canvas,
+                    canvasElement,
                     result.x / result.r,
                     result.y / result.r,
                     result.r,
@@ -38,56 +72,16 @@
             );
         });
 
-        canvasController.updateFrame();
-
-        selectFunction = () => {
-            plane.switchLabels(r);
-        };
-
-        canvas?.addEventListener("click", (event) => {
-            let position = CanvasController.getCursorPositionOnCanvas(
-                event,
-                canvas,
-            );
-            let x = Number(
-                ((position.x / (canvas.width / 3)) * plane.R).toFixed(2),
-            );
-            let y = Number(
-                ((position.y / (canvas.height / 3)) * plane.R).toFixed(2),
-            );
-            let res = checkHit({ x: x, y: y, r: r });
-
-            console.log(res);
-            res.then((result) => {
-                if (result.result) {
-                    plane.addPoint(
-                        createPoint(
-                            canvas,
-                            result.result.x / result.result.r,
-                            result.result.y / result.result.r,
-                            result.result.r,
-                            result.result.result,
-                        ),
-                    );
-                    canvasController.updateFrame();
-
-                    results.push({
-                        x: result.result.x,
-                        y: result.result.y,
-                        r: result.result.r,
-                        result: result.result.result,
-                        time: result.result.time,
-                        current_time: result.result.current_time,
-                    });
-                }
-            });
-        });
+        canvasController.updateFrame()
+    })
     });
+
+    
 </script>
 
 <div class="canvas-wrapper">
     <div id="canvas-container">
-        <canvas bind:this={canvas} id="canvas" width="400" height="400"></canvas>
+        <canvas bind:this={canvasElement} id="canvas" width="400" height="400"></canvas>
     </div>
     <div class="buttons">
         <InputButtonsGroup
