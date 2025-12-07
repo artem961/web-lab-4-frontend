@@ -82,6 +82,7 @@
         <canvas bind:this={canvasElement} id="canvas" width="400" height="400"></canvas>
     </div>
     <div class="buttons">
+        <h4>R</h4>
         <InputButtonsGroup
             bind:valueForUpdate={r}
             rangeOfValues={[1, 2, 3, 4, 5, 6]}

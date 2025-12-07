@@ -81,7 +81,7 @@
     .manage-buttons {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1rem;  
         align-items: center;
     }
 </style>
