@@ -10,7 +10,9 @@
 <style>
     .wrapper {
         display: flex;
-        flex-direction: column;
-        gap: 4rem;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        padding: 2rem;
     }
 </style>

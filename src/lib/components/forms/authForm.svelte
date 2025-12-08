@@ -2,12 +2,37 @@
     import { register, login } from "$lib/api/api";
     import TextInputField from "./inputs/textInputField.svelte";
     import Button, { Label } from "@smui/button";
+    import Tooltip, { Wrapper } from "@smui/tooltip";
 
     let username = $state("");
     let password = $state("");
     let errorMessage = $state("");
 
+    let usernameValidation = $derived.by(() => {
+        if (username === "") {
+            return "Username is empty!";
+        }
+    });
+
+    let passwordValidation = $derived.by(() => {
+        if (password === "") {
+            return "Password is empty!";
+        }
+        if (password.length < 5) {
+            return "Password is too short";
+        }
+    });
+
+    let valid = $derived(
+        passwordValidation === undefined && usernameValidation === undefined,
+    );
+
     function loginUser() {
+        if (!valid){
+            errorMessage="Input data is invalid!";
+            return;
+        }
+
         let result = login({ username: username, password: password });
         result.then((result) => {
             if (result.result) {
@@ -32,11 +57,17 @@
     </div>
     <div class="fields">
         <div class="inputs">
-            <TextInputField bind:value={username} label="Name"></TextInputField>
+            <TextInputField
+                bind:value={username}
+                label="Name"
+                errorText={usernameValidation}
+            ></TextInputField>
+
             <TextInputField
                 bind:value={password}
                 label="Password"
                 type="password"
+                errorText={passwordValidation}
             ></TextInputField>
         </div>
         <div class="error-message">
@@ -49,9 +80,11 @@
             onclick={() => {
                 loginUser();
             }}
+            disabled={!valid}
         >
             <Label>Sign in</Label>
         </Button>
+
         <Button
             variant="link"
             onclick={() => {
@@ -75,6 +108,14 @@
         display: flex;
         flex-direction: column;
         width: 25%;
+
+        @media (max-width: 643px) {
+            width: 80%;
+        }
+
+        @media (min-width: 644px) and (max-width: 1202px) {
+            width: 40%;
+        }
     }
 
     .inputs {
@@ -90,7 +131,7 @@
         gap: 1rem;
     }
 
-    .error-message{
+    .error-message {
         text-align: center;
     }
 </style>

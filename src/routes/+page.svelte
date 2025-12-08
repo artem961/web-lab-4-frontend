@@ -14,9 +14,4 @@
         flex-direction: column;
         gap: 4rem;
     }
-
-    .link{
-        width: 100%;
-        
-    }
 </style>

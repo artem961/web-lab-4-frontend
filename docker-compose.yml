@@ -1,0 +1,10 @@
+version: '3.9'
+
+services: 
+  svelte:
+    build:
+      context: .
+    container_name: lab4-svelte
+    ports: 
+      - "3000:3000"
+    restart: unless-stopped

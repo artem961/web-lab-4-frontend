@@ -1,5 +1,5 @@
-//const api = "http://localhost:8080/backend/api/";
-const api = "http://wildfly:8080/backend/api/";
+const api = "http://localhost:8080/backend/api/";
+//const api = "http://wildfly:8080/backend/api/";
 
 export async function handle({ event, resolve }) {
    if (event.url.pathname.startsWith("/api/")) {

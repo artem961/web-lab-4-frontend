@@ -8,31 +8,62 @@
     let passwordRetype = $state("");
     let errorMessage = $state("");
 
-    function regUser() {
+    let usernameValidation = $derived.by(() => {
         if (username === "") {
-            errorMessage = "Username is empty!";
-        } else if (password !== passwordRetype) {
-            errorMessage = "Passwords doesn't match!";
-        } else if (password.length < 5) {
-            errorMessage =
-                "Your password length should be more then 4 simbols!";
-        } else {
-            let result = register({ username: username, password: password });
-            result.then((result) => {
-                if (result.result) {
-                    let token = result.result.access_token;
-                    let tokenType = result.result.token_type;
-
-                    localStorage.setItem("access_token", token ?? "");
-                    localStorage.setItem("token_type", tokenType ?? "");
-                    window.location.href = "/canvas";
-                } else if (result.error) {
-                    errorMessage = result.error.error_message;
-                } else {
-                    errorMessage = "Failed to create request";
-                }
-            });
+            return "Username is empty";
         }
+    });
+
+    let passwordValidation = $derived.by(() => {
+        if (password === "") {
+            return "Password is empty";
+        }
+        if (password.length < 5) {
+            return "Password is too short";
+        }
+
+        if (passwordRetype !== "" && password !== passwordRetype) {
+            return "Passwords don't match";
+        }
+    });
+
+    let retypePasswordValidation = $derived.by(() => {
+        if (passwordRetype === "") {
+            return "Retype password";
+        }
+
+        if (password !== passwordRetype) {
+            return "Passwords don't match";
+        }
+    });
+
+    let valid = $derived(
+        passwordValidation === undefined &&
+            usernameValidation === undefined &&
+            retypePasswordValidation === undefined,
+    );
+
+    function regUser() {
+        if (!valid) {
+            errorMessage = "Input data is invalid!";
+            return;
+        }
+
+        let result = register({ username: username, password: password });
+        result.then((result) => {
+            if (result.result) {
+                let token = result.result.access_token;
+                let tokenType = result.result.token_type;
+
+                localStorage.setItem("access_token", token ?? "");
+                localStorage.setItem("token_type", tokenType ?? "");
+                window.location.href = "/canvas";
+            } else if (result.error) {
+                errorMessage = result.error.error_message;
+            } else {
+                errorMessage = "Failed to create request";
+            }
+        });
     }
 </script>
 
@@ -42,16 +73,24 @@
     </div>
     <div class="fields">
         <div class="inputs">
-            <TextInputField bind:value={username} label="Name"></TextInputField>
+            <TextInputField
+                bind:value={username}
+                label="Name"
+                errorText={usernameValidation}
+            ></TextInputField>
+
             <TextInputField
                 bind:value={password}
                 label="Password"
                 type="password"
+                errorText={passwordValidation}
             ></TextInputField>
+
             <TextInputField
                 bind:value={passwordRetype}
                 label="Retype password"
                 type="password"
+                errorText={retypePasswordValidation}
             ></TextInputField>
         </div>
         <div class="error-message">
@@ -64,6 +103,7 @@
             onclick={() => {
                 regUser();
             }}
+            disabled={!valid}
         >
             <Label>Sign up</Label>
         </Button>
@@ -76,14 +116,23 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        width: 100%;
     }
 
     .fields {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
         width: 25%;
+
+        @media (max-width: 643px) {
+            width: 80%;
+        }
+
+        @media (min-width: 644px) and (max-width: 1202px) {
+            width: 40%;
+        }
     }
+
     .buttons {
         display: flex;
         flex-direction: column;
