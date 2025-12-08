@@ -6,6 +6,8 @@
     import { checkHit, getAllResults } from "$lib/api/api";
     import type { CheckResult, FetchResult } from "$lib/api/interfaces";
     import { createPoint } from "./scripts/interactiveObjects/point-object";
+    import { devicePixelRatio } from "svelte/reactivity/window";
+    import { Label } from "@smui/button";
 
     let { r = $bindable(), results = $bindable() } = $props();
 
@@ -14,14 +16,15 @@
     let plane: Plane | null = null;
 
     let selectFunction = () => {};
-     
 
     onMount(() => {
         const canvasController = new CanvasController(canvasElement);
         let plane = new Plane(canvasController, r);
         plane.initObjects();
 
-        canvasElement.addEventListener("click", (event) => handleCanvasClick(event));
+        canvasElement.addEventListener("click", (event) =>
+            handleCanvasClick(event),
+        );
 
         canvasController.updateFrame();
 
@@ -30,59 +33,68 @@
         };
 
         function addPointToResults(result: CheckResult) {
-        if (!plane || !canvasElement) return;
-        
-        results.push(result);
-        
-        canvasController?.updateFrame();
-    }
+            if (!plane || !canvasElement) return;
 
-    async function handleCanvasClick(event: MouseEvent) {
-        if (!canvasController || !plane || !canvasElement) return;
-        
-        const position = CanvasController.getCursorPositionOnCanvas(event, canvasElement);
-        const x = Number(((position.x / (canvasElement.width / 3)) * plane.R).toFixed(2));
-        const y = Number(((position.y / (canvasElement.height / 3)) * plane.R).toFixed(2));
-        
-        try {
-            const response = await checkHit({ x, y, r });
-            
-            if (response.result) {
-                addPointToResults(response.result);
-            }
-        } catch (error) {
-            console.error('Error checking hit:', error);
+            results.push(result);
+
+            canvasController?.updateFrame();
         }
-    }
 
-    $effect(()=>{
-        plane.clearPoints();
+        async function handleCanvasClick(event: MouseEvent) {
+            if (!canvasController || !plane || !canvasElement) return;
 
-         results.forEach((result: CheckResult) => {
-            plane.addPoint(
-                createPoint(
-                    canvasElement,
-                    result.x / result.r,
-                    result.y / result.r,
-                    result.r,
-                    result.result,
+            const position = CanvasController.getCursorPositionOnCanvas(
+                event,
+                canvasElement,
+            );
+            const x = Number(
+                ((position.x / (canvasElement.width / 3)) * plane.R).toFixed(2),
+            );
+            const y = Number(
+                ((position.y / (canvasElement.height / 3)) * plane.R).toFixed(
+                    2,
                 ),
             );
-        });
 
-        canvasController.updateFrame()
-    })
+            try {
+                const response = await checkHit({ x, y, r });
+
+                if (response.result) {
+                    addPointToResults(response.result);
+                }
+            } catch (error) {
+                console.error("Error checking hit:", error);
+            }
+        }
+
+        $effect(() => {
+            plane.clearPoints();
+
+            results.forEach((result: CheckResult) => {
+                plane.addPoint(
+                    createPoint(
+                        canvasElement,
+                        result.x / result.r,
+                        result.y / result.r,
+                        result.r,
+                        result.result,
+                    ),
+                );
+            });
+
+            canvasController.updateFrame();
+        });
     });
 
-    
 </script>
 
 <div class="canvas-wrapper">
     <div id="canvas-container">
-        <canvas bind:this={canvasElement} id="canvas" width="400" height="400"></canvas>
+        <canvas bind:this={canvasElement} id="canvas" width="400" height="400"
+        ></canvas>
     </div>
     <div class="buttons">
-        <h4>R</h4>
+        <Label>R</Label>
         <InputButtonsGroup
             bind:valueForUpdate={r}
             rangeOfValues={[1, 2, 3, 4, 5, 6]}
@@ -109,6 +121,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 1rem;
     }
 
     .canvas-wrapper {

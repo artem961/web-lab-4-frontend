@@ -25,41 +25,29 @@
         <Canvas bind:r {results} />
     </div>
     <div class="table-column">
-        <Table tableData={results}></Table>
+        <Table bind:results></Table>
     </div>
     <div class="menu-column">
         <div class="points-form">
-            <PointsForm bind:x bind:y bind:r {results} />
+            <PointsForm bind:x bind:y bind:r bind:results />
         </div>
-        <div class="manage-buttons">
-            <Button
-                variant="raised"
-                onclick={() => {
-                    deleteAllResults();
-                    results = [];
-                }}
-            >
-                <Label>Clear</Label>
-            </Button>
-
-            <Button
-                variant="raised"
-                onclick={() => {
-                    logout();
-                    window.location.href = ".";
-                }}
-            >
-                <Label>Logout</Label>
-            </Button>
-        </div>
+        
     </div>
 </div>
 
 <style>
     .wrapper {
         display: flex;
+        gap: 1rem;
         flex-direction: row;
-        gap: 4rem;
+
+        @media (max-width: 643px) {
+            flex-direction: column;
+        }
+
+        @media (min-width: 644px) and (max-width: 1202px) {
+            width: 40%;
+        }
     }
 
     .canvas-column {
@@ -67,7 +55,7 @@
     }
 
     .menu-column {
-        flex: 4;
+        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -75,7 +63,7 @@
         gap: 5rem;
     }
     .table-column {
-        flex: 1;
+        flex: 2;
     }
 
     .manage-buttons {

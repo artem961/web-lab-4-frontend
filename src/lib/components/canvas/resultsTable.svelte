@@ -1,30 +1,52 @@
 <script lang="ts">
-    import type { CheckResult } from "$lib/api/interfaces";
+  import type { CheckResult } from "$lib/api/interfaces";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
 
-  const headers = ["x", "y", "r", "Результат", "Время вычисления", "Время"];
+  const headers = [
+    "№",
+    "Результат",
+    "x",
+    "y",
+    "r",
+    "Время вычисления",
+    "Время",
+  ];
 
-  let { tableData }: { tableData: CheckResult[] } = $props();
+  let { results=$bindable() }: { results: CheckResult[] } = $props();
 </script>
 
-<DataTable table$aria-label="People list" style="max-width: 100%;">
-  <Head>
-    <Row>
-      {#each headers as header}
-        <Cell>{header}</Cell>
-      {/each}
-    </Row>
-  </Head>
-  <Body>
-    {#each tableData as row}
+<div class="table-wrapper">
+  <DataTable stickyHeader table$aria-label="People list" style="width: 100%">
+    <Head>
       <Row>
-        <Cell>{row.x}</Cell>
-        <Cell>{row.y}</Cell>
-        <Cell>{row.r}</Cell>
-        <Cell>{row.result}</Cell>
-        <Cell>{row.time}</Cell>
-        <Cell>{row.current_time}</Cell>
+        {#each headers as header}
+          <Cell>{header}</Cell>
+        {/each}
       </Row>
-    {/each}
-  </Body>
-</DataTable>
+    </Head>
+    <Body>
+      {#each results as row, index}
+        <Row>
+          <Cell>{index + 1}</Cell>
+          <Cell>{row.result}</Cell>
+          <Cell>{row.x}</Cell>
+          <Cell>{row.y}</Cell>
+          <Cell>{row.r}</Cell>
+          <Cell>{row.time}</Cell>
+          <Cell>{row.current_time}</Cell>
+        </Row>
+      {/each}
+    </Body>
+  </DataTable>
+</div>
+
+<style>
+  .table-wrapper {
+    width: 100%;
+  
+    height: 80vh;
+    overflow-y: auto;
+  }
+
+   
+</style>

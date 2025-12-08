@@ -28,8 +28,8 @@
     );
 
     function loginUser() {
-        if (!valid){
-            errorMessage="Input data is invalid!";
+        if (!valid) {
+            errorMessage = "Input data is invalid!";
             return;
         }
 
@@ -71,7 +71,7 @@
             ></TextInputField>
         </div>
         <div class="error-message">
-            <p>{errorMessage}</p>
+            <Label>{errorMessage}</Label>
         </div>
     </div>
     <div class="buttons">
@@ -133,5 +133,8 @@
 
     .error-message {
         text-align: center;
+        height: 24px;
+        margin-top: 4px;
+        color: #d32f2f;
     }
 </style>

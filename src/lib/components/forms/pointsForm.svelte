@@ -3,14 +3,17 @@
     import InputButton from "./inputs/inputButton.svelte";
     import Button, { Group, Label } from "@smui/button";
     import InputButtonsGroup from "./inputs/inputButtonsGroup.svelte";
-    import { checkHit } from "$lib/api/api";
+    import { checkHit, deleteAllResults } from "$lib/api/api";
+    import Tooltip, { Wrapper } from "@smui/tooltip";
 
     let {
         x = $bindable(),
         y = $bindable(),
         r = $bindable(),
-        results,
+        results = $bindable(),
     } = $props();
+
+    let valid = $state(false);
 
     function sendPoint() {
         let res = checkHit({ x: x, y: y, r: r });
@@ -32,13 +35,12 @@
 
 <div class="wrapper">
     <form>
-        <p>Selected point:  x: {x} y: {y}</p>
         <div class="title">
             <h1>Point selection</h1>
         </div>
         <div class="fields">
+            <Label>X</Label>
             <div class="x-buttons">
-                <h4>X</h4>
                 <InputButtonsGroup
                     rangeOfValues={[-4, -3, -2, -1, 0, 1, 2, 3, 4]}
                     columns={3}
@@ -47,10 +49,12 @@
                     }}
                 ></InputButtonsGroup>
             </div>
+            <Label>Y</Label>
 
             <NumberInputField
                 variant="outlined"
                 bind:value={y}
+                bind:valid
                 label="Y"
                 helperText="from -3 to 3"
                 min={-3}
@@ -58,13 +62,30 @@
             ></NumberInputField>
         </div>
         <div class="buttons">
+            <Wrapper>
+                <div>
+                    <Button
+                        variant="raised"
+                        onclick={() => {
+                            sendPoint();
+                        }}
+                        disabled={!valid}
+                    >
+                        <Label>Check</Label>
+                    </Button>
+                </div>
+                <Tooltip yPos="above" xPos="end">Select valid values</Tooltip>
+            </Wrapper>
+        </div>
+        <div class="manage-buttons">
             <Button
-                variant="raised"
+                variant="outlined   "
                 onclick={() => {
-                    sendPoint();
+                    deleteAllResults();
+                    results = [];
                 }}
             >
-                <Label>Check</Label>
+                <Label>Clear</Label>
             </Button>
         </div>
     </form>
@@ -95,6 +116,12 @@
         flex-direction: column;
         gap: 4rem;
         width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border: 3px solid #0a1929;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem;
     }
 
     .x-buttons {
