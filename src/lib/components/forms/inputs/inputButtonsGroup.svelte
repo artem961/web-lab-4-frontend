@@ -2,7 +2,7 @@
     import { Group } from "@smui/button";
     import InputButton from "./inputButton.svelte";
 
-    let  {valueForUpdate= $bindable(), rangeOfValues, columns, onSelectExecuteFunction=()=>{}} = $props();
+    let  {valueForUpdate=$bindable(), rangeOfValues, columns, onSelectExecuteFunction=()=>{}} = $props();
 
     let rows = [];
     for (let i = 0; i < rangeOfValues.length; i+=columns){
@@ -22,6 +22,7 @@
                             valueForUpdate=val;
                             onSelectExecuteFunction(val);
                         }}
+                        style={valueForUpdate===val?"background-color: #23303D; color:grey":""}
                     ></InputButton>
                 {/each}
             </Group>

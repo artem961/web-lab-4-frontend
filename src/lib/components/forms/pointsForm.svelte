@@ -44,9 +44,7 @@
                 <InputButtonsGroup
                     rangeOfValues={[-4, -3, -2, -1, 0, 1, 2, 3, 4]}
                     columns={3}
-                    onSelectExecuteFunction={(value: number) => {
-                        x = value;
-                    }}
+                    bind:valueForUpdate={x}
                 ></InputButtonsGroup>
             </div>
             <Label>Y</Label>
@@ -78,6 +76,7 @@
             </Wrapper>
         </div>
         <div class="manage-buttons">
+            <Wrapper>
             <Button
                 variant="outlined   "
                 onclick={() => {
@@ -85,8 +84,10 @@
                     results = [];
                 }}
             >
-                <Label>Clear</Label>
+                <Label>Clear results</Label>
             </Button>
+            <Tooltip yPos="above" xPos="end">Delete all results</Tooltip>
+            </Wrapper>
         </div>
     </form>
 </div>
