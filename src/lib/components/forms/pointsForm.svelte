@@ -33,72 +33,76 @@
     }
 </script>
 
-<div class="wrapper">
-    <form>
-        <div class="title">
-            <h1>Point selection</h1>
+<div class="form">
+    <div class="title">
+        <h1>Point selection</h1>
+    </div>
+    <div class="fields">
+        <Label>X</Label>
+        <div class="x-buttons">
+            <InputButtonsGroup
+                rangeOfValues={[-4, -3, -2, -1, 0, 1, 2, 3, 4]}
+                columns={3}
+                bind:valueForUpdate={x}
+            ></InputButtonsGroup>
         </div>
-        <div class="fields">
-            <Label>X</Label>
-            <div class="x-buttons">
-                <InputButtonsGroup
-                    rangeOfValues={[-4, -3, -2, -1, 0, 1, 2, 3, 4]}
-                    columns={3}
-                    bind:valueForUpdate={x}
-                ></InputButtonsGroup>
-            </div>
-            <Label>Y</Label>
+        <Label>Y</Label>
 
-            <NumberInputField
-                variant="outlined"
-                bind:value={y}
-                bind:valid
-                label="Y"
-                helperText="from -3 to 3"
-                min={-3}
-                max={3}
-            ></NumberInputField>
-        </div>
-        <div class="buttons">
-            <Wrapper>
-                <div>
-                    <Button
-                        variant="raised"
-                        onclick={() => {
-                            sendPoint();
-                        }}
-                        disabled={!valid}
-                    >
-                        <Label>Check</Label>
-                    </Button>
-                </div>
-                <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
-            </Wrapper>
-        </div>
-        <div class="manage-buttons">
-            <Wrapper>
+        <NumberInputField
+            variant="outlined"
+            bind:value={y}
+            bind:valid
+            label="Y"
+            helperText="from -3 to 3"
+            min={-3}
+            max={3}
+        ></NumberInputField>
+    </div>
+    <div class="buttons">
+        <Wrapper>
+            <div>
                 <Button
-                    variant="outlined   "
+                    variant="raised"
                     onclick={() => {
-                        deleteAllResults();
-                        results = [];
+                        sendPoint();
                     }}
+                    disabled={!valid}
                 >
-                    <Label>Clear results</Label>
+                    <Label>Check</Label>
                 </Button>
-                <Tooltip yPos="above" xPos="end">Delete all results</Tooltip>
-            </Wrapper>
-        </div>
-    </form>
+            </div>
+            <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+        </Wrapper>
+    </div>
+    <div class="manage-buttons">
+        <Wrapper>
+            <Button
+                variant="outlined   "
+                onclick={() => {
+                    deleteAllResults();
+                    results = [];
+                }}
+            >
+                <Label>Clear results</Label>
+            </Button>
+            <Tooltip yPos="above" xPos="end">Delete all results</Tooltip>
+        </Wrapper>
+    </div>
 </div>
 
 <style>
-    form {
+    .form {
         align-items: center;
         display: flex;
         flex-direction: column;
         gap: 2rem;
         width: 100%;
+         width: 100%;
+        margin-right: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 3px solid #0a1929;
+        border-radius: 10px;
     }
 
     .fields {
@@ -109,27 +113,5 @@
         align-items: center;
     }
 
-    .buttons {
-    }
-
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 4rem;
-        width: 100%;
-        padding-left: 1rem;
-        padding-right: 1rem;
-        border: 3px solid #0a1929;
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 1rem;
-    }
-
-    .x-buttons {
-    }
-    .x-buttons-row {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
+    
 </style>

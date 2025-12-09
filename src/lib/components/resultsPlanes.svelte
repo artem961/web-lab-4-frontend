@@ -28,7 +28,7 @@
     .table-wrapper {
         width: 100%;
 
-        height: 80vh;
+        height: 50vh;
         overflow-y: auto;
     }
 </style>

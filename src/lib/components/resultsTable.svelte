@@ -2,17 +2,9 @@
   import type { CheckResult } from "$lib/api/interfaces";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
 
-  const headers = [
-    "№",
-    "Result",
-    "x",
-    "y",
-    "r",
-    "Computing time",
-    "Time",
-  ];
+  const headers = ["№", "Result", "x", "y", "r", "Computing time", "Time"];
 
-  let { results=$bindable() }: { results: CheckResult[] } = $props();
+  let { results = $bindable() }: { results: CheckResult[] } = $props();
 </script>
 
 <div class="table-wrapper">
@@ -43,10 +35,11 @@
 <style>
   .table-wrapper {
     width: 100%;
-  
+
     height: 80vh;
+     @media (min-width: 644px) and (max-width: 1202px) {
+             height: 30vh;
+        }
     overflow-y: auto;
   }
-
-   
 </style>
