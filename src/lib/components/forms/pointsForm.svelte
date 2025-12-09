@@ -72,21 +72,21 @@
                         <Label>Check</Label>
                     </Button>
                 </div>
-                <Tooltip yPos="above" xPos="end">Select valid values</Tooltip>
+                <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
             </Wrapper>
         </div>
         <div class="manage-buttons">
             <Wrapper>
-            <Button
-                variant="outlined   "
-                onclick={() => {
-                    deleteAllResults();
-                    results = [];
-                }}
-            >
-                <Label>Clear results</Label>
-            </Button>
-            <Tooltip yPos="above" xPos="end">Delete all results</Tooltip>
+                <Button
+                    variant="outlined   "
+                    onclick={() => {
+                        deleteAllResults();
+                        results = [];
+                    }}
+                >
+                    <Label>Clear results</Label>
+                </Button>
+                <Tooltip yPos="above" xPos="end">Delete all results</Tooltip>
             </Wrapper>
         </div>
     </form>

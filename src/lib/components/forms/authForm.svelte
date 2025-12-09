@@ -75,16 +75,21 @@
         </div>
     </div>
     <div class="buttons">
-        <Button
-            variant="raised"
-            onclick={() => {
-                loginUser();
-            }}
-            disabled={!valid}
-        >
-            <Label>Sign in</Label>
-        </Button>
-
+        <Wrapper>
+            <div>
+                <Button
+                    variant="raised"
+                    onclick={() => {
+                        loginUser();
+                    }}
+                    disabled={!valid}
+                    style="width: 100%"
+                >
+                    <Label>Sign in</Label>
+                </Button>
+            </div>
+            <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+        </Wrapper>
         <Button
             variant="link"
             onclick={() => {

@@ -1,5 +1,6 @@
 <script>
     import { register } from "$lib/api/api";
+    import Tooltip, { Wrapper } from "@smui/tooltip";
     import TextInputField from "./inputs/textInputField.svelte";
     import Button, { Label } from "@smui/button";
 
@@ -94,19 +95,24 @@
             ></TextInputField>
         </div>
         <div class="error-message">
-           <Label>{errorMessage}</Label>
+            <Label>{errorMessage}</Label>
         </div>
     </div>
     <div class="buttons">
-        <Button
-            variant="raised"
-            onclick={() => {
-                regUser();
-            }}
-            disabled={!valid}
-        >
-            <Label>Sign up</Label>
-        </Button>
+        <Wrapper>
+            <div>
+                <Button
+                    variant="raised"
+                    onclick={() => {
+                        regUser();
+                    }}
+                    disabled={!valid}
+                >
+                    <Label>Sign up</Label>
+                </Button>
+            </div>
+            <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+        </Wrapper>
     </div>
 </form>
 
@@ -141,10 +147,10 @@
 
     .error-message {
         text-align: center;
-		height: 24px;
-		margin-top: 4px;
-		color: #d32f2f;
-	}
+        height: 24px;
+        margin-top: 4px;
+        color: #d32f2f;
+    }
 
     .inputs {
         display: flex;
