@@ -11,10 +11,11 @@
 
     let { r = $bindable(), results = $bindable() } = $props();
 
+    let canvasSide = $state(400);
+
     let canvasElement: HTMLCanvasElement;
     let canvasController: CanvasController | null = null;
     let plane: Plane | null = null;
-
     let selectFunction = () => {};
 
     onMount(() => {
@@ -47,10 +48,10 @@
                 event,
                 canvasElement,
             );
-            const x = Number(
+            let x = Number(
                 ((position.x / (canvasElement.width / 3)) * plane.R).toFixed(2),
             );
-            const y = Number(
+            let y = Number(
                 ((position.y / (canvasElement.height / 3)) * plane.R).toFixed(
                     2,
                 ),
@@ -90,7 +91,7 @@
 
 <div class="canvas-wrapper">
     <div id="canvas-container">
-        <canvas bind:this={canvasElement} id="canvas" width="400" height="400"
+        <canvas bind:this={canvasElement} id="canvas" width={canvasSide} height={canvasSide}
         ></canvas>
     </div>
     <div class="buttons">
@@ -114,6 +115,10 @@
         padding: 5px;
         border-radius: var(--radius-xl);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+         @media (max-width: 643px) {
+           
+        }
     }
 
     .buttons {

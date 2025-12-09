@@ -88,7 +88,9 @@
                     <Label>Sign in</Label>
                 </Button>
             </div>
-            <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+            {#if !valid}
+                <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+            {/if}
         </Wrapper>
         <Button
             variant="link"

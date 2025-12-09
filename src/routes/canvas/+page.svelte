@@ -1,11 +1,12 @@
 <script lang="ts">
     import Canvas from "$lib/components/canvas/canvas.svelte";
     import PointsForm from "$lib/components/forms/pointsForm.svelte";
-    import Table from "$lib/components/canvas/resultsTable.svelte";
+    import Table from "$lib/components/resultsTable.svelte";
     import type { CheckResult, FetchResult } from "$lib/api/interfaces";
     import { deleteAllResults, getAllResults, logout } from "$lib/api/api";
     import { onMount } from "svelte";
     import Button, { Label } from "@smui/button";
+    import ResultsPlanes from "$lib/components/resultsPlanes.svelte";
 
     let x = $state(0);
     let y = $state(0);
@@ -25,13 +26,17 @@
         <Canvas bind:r {results} />
     </div>
     <div class="table-column">
-        <Table bind:results></Table>
+        <div class="table-display">
+            <Table bind:results></Table>
+        </div>
+        <div class="plane-display">
+            <ResultsPlanes bind:results></ResultsPlanes>
+        </div>
     </div>
     <div class="menu-column">
         <div class="points-form">
             <PointsForm bind:x bind:y bind:r bind:results />
         </div>
-        
     </div>
 </div>
 
@@ -46,7 +51,19 @@
         }
 
         @media (min-width: 644px) and (max-width: 1202px) {
-            width: 40%;
+            flex-direction: column;
+        }
+    }
+
+    .table-display{
+         @media (max-width: 643px) {
+           display: none;
+        }
+    }
+
+    .plane-display{
+         @media (min-width: 644px) {
+           display: none;
         }
     }
 
@@ -69,7 +86,7 @@
     .manage-buttons {
         display: flex;
         flex-direction: column;
-        gap: 1rem;  
+        gap: 1rem;
         align-items: center;
     }
 </style>

@@ -111,7 +111,9 @@
                     <Label>Sign up</Label>
                 </Button>
             </div>
-            <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+            {#if !valid}
+                <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+            {/if}
         </Wrapper>
     </div>
 </form>

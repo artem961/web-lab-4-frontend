@@ -4,12 +4,12 @@
 
   const headers = [
     "№",
-    "Результат",
+    "Result",
     "x",
     "y",
     "r",
-    "Время вычисления",
-    "Время",
+    "Computing time",
+    "Time",
   ];
 
   let { results=$bindable() }: { results: CheckResult[] } = $props();
