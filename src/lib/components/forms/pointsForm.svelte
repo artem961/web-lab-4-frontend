@@ -97,7 +97,7 @@
         flex-direction: column;
         gap: 2rem;
         width: 100%;
-         width: 100%;
+        padding-bottom: 1rem;
         margin-right: 1rem;
         margin-top: 1rem;
         margin-bottom: 1rem;
@@ -112,6 +112,4 @@
         width: 100%;
         align-items: center;
     }
-
-    
 </style>
