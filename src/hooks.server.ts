@@ -1,5 +1,6 @@
-//const api = "http://localhost:8080/backend/api/";
-const api = "http://wildfly:8080/backend/api/";
+import config from '$lib/app-config.json';
+const api = config.backend_host;
+
 
 export async function handle({ event, resolve }) {
    if (event.url.pathname.startsWith("/api/")) {

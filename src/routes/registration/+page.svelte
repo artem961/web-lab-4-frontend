@@ -4,15 +4,18 @@
 </script>
 
 <div class="wrapper">
+    <Header></Header>
     <RegForm />
 </div>
 
 <style>
-    .wrapper {
+   
+      .wrapper {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 80vh;
-        padding: 2rem;
+        flex-direction: column;
+        gap: 4rem;
+        @media (max-width: 643px) {
+            gap: 0;
+        }
     }
 </style>

@@ -109,6 +109,14 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+
+        @media (max-height: 650px) {
+           gap: 0;
+        }
+
+         @media (max-width: 643px) {
+            gap: 1rem;
+        }
     }
 
     .fields {

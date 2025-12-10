@@ -18,7 +18,7 @@
         class="user-block"
         role="button"
         onclick={() => {
-            let location = user ? "/profile" : "/registration";
+            let location = user ? "/profile" : "/";
             window.location.href = location;
         }}
     >
@@ -26,7 +26,7 @@
             {#if user}
                 <div class="user-name">user</div>
             {:else}
-                <div class="user-name">Registration</div>
+                <div class="user-name">Auth</div>
             {/if}
         </div>
         <div class="user-icon">👤</div>
@@ -42,12 +42,17 @@
 
         background: #0a1929;
         border-bottom: 2px solid #4fc3f7;
+
     }
 
     .logo-block {
         display: flex;
         align-items: center;
         gap: 15px;
+
+         @media (max-height: 650px) {
+            display: none;
+        }
     }
 
     .logo-icon {
@@ -66,7 +71,7 @@
         color: #4fc3f7;
 
         @media (max-width: 643px) {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
     }
 
@@ -96,8 +101,8 @@
         border: 1px solid rgba(79, 195, 247, 0.2);
         transition: all 0.2s ease;
 
-        @media (max-width: 643px) {
-            scale: 0.8;
+         @media (max-height: 650px) {
+            display: none;
         }
     }
 

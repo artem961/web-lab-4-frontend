@@ -3,6 +3,7 @@
     import Tooltip, { Wrapper } from "@smui/tooltip";
     import TextInputField from "./inputs/textInputField.svelte";
     import Button, { Label } from "@smui/button";
+    import Header from "../header.svelte";
 
     let username = $state("");
     let password = $state("");
@@ -125,6 +126,14 @@
         flex-direction: column;
         gap: 2rem;
         width: 100%;
+
+         @media (max-height: 650px) {
+           gap: 0;
+        }
+
+         @media (max-width: 643px) {
+            gap: 1rem;
+        }
     }
 
     .fields {
@@ -159,5 +168,6 @@
         flex-direction: column;
         gap: 1rem;
         width: 100%;
+        
     }
 </style>
