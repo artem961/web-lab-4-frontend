@@ -55,7 +55,7 @@ export class CanvasController {
         return false;
     }
 
-    checkAnimationsStarted(){
+    checkAnimationsStarted() {
         for (const object of this.objects) {
             if (object.supportsAnimation && object.animationStarted) {
                 return true;
@@ -73,7 +73,7 @@ export class CanvasController {
     }
 
     addObjects(objects) {
-        objects.forEach(object => {this.addObject(object);});
+        objects.forEach(object => { this.addObject(object); });
     }
 
     removeObject(interactiveObject) {
@@ -81,7 +81,7 @@ export class CanvasController {
     }
 
     removeObjects(objects) {
-        objects.forEach(object => {this.removeObject(object)});
+        objects.forEach(object => { this.removeObject(object) });
     }
 
     clearCanvas() {
@@ -94,14 +94,26 @@ export class CanvasController {
         });
     }
 
-      static getCursorPositionOnCanvas(event, canvas) {
+    static getCursorPositionOnCanvas(event, canvas) {
         const rect = canvas.getBoundingClientRect();
         const style = window.getComputedStyle(canvas);
         const paddingLeft = parseFloat(style.paddingLeft);
         const paddingTop = parseFloat(style.paddingTop);
 
-        let x = Math.round(event.clientX - rect.left - paddingLeft - 1);
-        let y = Math.round(event.clientY - rect.top - paddingTop - 1);
+        const drawableWidth = rect.width - paddingLeft - parseFloat(style.paddingRight);
+        const drawableHeight = rect.height - paddingTop - parseFloat(style.paddingBottom);
+
+        const scaleX = canvas.width / drawableWidth;
+        const scaleY = canvas.height / drawableHeight;
+
+        let x = event.clientX - rect.left - paddingLeft;
+        let y = event.clientY - rect.top - paddingTop;
+
+        x = x * scaleX;
+        y = y * scaleY;
+
+        x = Math.round(x - 1);
+        y = Math.round(y - 1);
 
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
@@ -110,8 +122,7 @@ export class CanvasController {
 
         return new Position(x, -y);
     }
-
-     processHover(position) {
+    processHover(position) {
         this.objects.forEach(object => {
             if (object.checkHover && object.checkPositionInObject(position)) {
                 object.setHovered(true);
