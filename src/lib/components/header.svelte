@@ -1,8 +1,12 @@
 <script>
     import config from "$lib/app-config.json";
     import duck from "$lib/assets/duck.png";
+    import { onMount } from "svelte";
 
     let user = $state();
+    onMount(() => {
+        user = localStorage.getItem("access_token");
+    });
 </script>
 
 <header class="header">
@@ -24,7 +28,7 @@
     >
         <div class="user-data">
             {#if user}
-                <div class="user-name">user</div>
+                <div class="user-name">User</div>
             {:else}
                 <div class="user-name">Auth</div>
             {/if}
@@ -32,6 +36,7 @@
         <div class="user-icon">👤</div>
     </div>
 </header>
+
 <style>
     .header {
         display: flex;
@@ -49,7 +54,7 @@
             opacity: 0;
             border-bottom-width: 0;
         }
-        
+
         @media (min-height: 650px) {
             max-height: 100px;
             opacity: 1;
@@ -78,7 +83,7 @@
         @media (max-width: 643px) {
             display: none;
         }
-        
+
         @media (max-height: 650px) {
             max-block-size: 2rem;
         }
@@ -94,7 +99,7 @@
         @media (max-width: 643px) {
             font-size: 1.3rem;
         }
-        
+
         @media (max-height: 650px) {
             font-size: 1.8rem;
         }
@@ -105,11 +110,11 @@
         font-weight: 700;
         color: #3f4a55;
         transition: all 0.3s ease;
-        
+
         @media (max-width: 643px) {
             font-size: 0.5rem;
         }
-        
+
         @media (max-height: 650px) {
             font-size: 0.7rem;
         }
@@ -144,7 +149,7 @@
     .user-block:hover {
         background: rgba(129, 212, 250, 0.2);
         border-color: #4fc3f7;
-        
+
         @media (max-height: 650px) {
             transform: scale(0.85);
             opacity: 0.9;
@@ -161,7 +166,7 @@
         margin-bottom: 2px;
         color: #81d4fa;
         transition: all 0.3s ease;
-        
+
         @media (max-height: 650px) {
             font-size: 0.85rem;
         }
@@ -174,7 +179,7 @@
         background: rgba(79, 195, 247, 0.1);
         color: #4fc3f7;
         transition: all 0.3s ease;
-        
+
         @media (max-height: 650px) {
             font-size: 1.2rem;
             padding: 6px;
@@ -186,11 +191,11 @@
             gap: 8px;
             padding: 6px 10px;
         }
-        
+
         .user-name {
             font-size: 0.85rem;
         }
-        
+
         .user-icon {
             font-size: 1.1rem;
             padding: 5px;

@@ -12,20 +12,31 @@
 
     let usernameValidation = $derived.by(() => {
         if (username === "") {
-            return "Username is empty";
+            return "Name is empty";
+        }
+        if (username.length < 2) {
+            return "Name is too short";
+        }
+        if (username.length > 30) {
+            return "Name is too long";
         }
     });
 
     let passwordValidation = $derived.by(() => {
+        if (passwordRetype !== "" && password !== passwordRetype) {
+            return "Passwords don't match";
+        }
+
         if (password === "") {
             return "Password is empty";
         }
+
         if (password.length < 5) {
             return "Password is too short";
         }
 
-        if (passwordRetype !== "" && password !== passwordRetype) {
-            return "Passwords don't match";
+        if (password.length > 30) {
+            return "Pawword is too long";
         }
     });
 
@@ -36,6 +47,10 @@
 
         if (password !== passwordRetype) {
             return "Passwords don't match";
+        }
+
+        if (password.length > 30) {
+            return "Pawword is too long";
         }
     });
 
@@ -54,11 +69,6 @@
         let result = register({ username: username, password: password });
         result.then((result) => {
             if (result.result) {
-                let token = result.result.access_token;
-                let tokenType = result.result.token_type;
-
-                localStorage.setItem("access_token", token ?? "");
-                localStorage.setItem("token_type", tokenType ?? "");
                 window.location.href = "/canvas";
             } else if (result.error) {
                 errorMessage = result.error.error_message;
@@ -127,11 +137,11 @@
         gap: 2rem;
         width: 100%;
 
-         @media (max-height: 650px) {
-           gap: 0;
+        @media (max-height: 650px) {
+            gap: 0;
         }
 
-         @media (max-width: 643px) {
+        @media (max-width: 643px) {
             gap: 1rem;
         }
     }
@@ -168,6 +178,5 @@
         flex-direction: column;
         gap: 1rem;
         width: 100%;
-        
     }
 </style>

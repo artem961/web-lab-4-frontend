@@ -5,6 +5,14 @@
   const headers = ["№", "Result", "x", "y", "r", "Computing time", "Time"];
 
   let { results = $bindable() }: { results: CheckResult[] } = $props();
+
+  let dateOptions = {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
 </script>
 
 <div class="table-wrapper">
@@ -20,12 +28,16 @@
       {#each results as row, index}
         <Row>
           <Cell>{index + 1}</Cell>
-          <Cell>{row.result}</Cell>
+          <Cell style={"color: " + (row.result?"rgb(92, 179, 116)": "rgb(214, 97, 95)")}>{row.result}</Cell>
           <Cell>{row.x}</Cell>
           <Cell>{row.y}</Cell>
           <Cell>{row.r}</Cell>
           <Cell>{row.time}</Cell>
-          <Cell>{row.current_time}</Cell>
+          <Cell
+            >{new Intl.DateTimeFormat("de-DE", dateOptions).format(
+              new Date(row.currentTime),
+            )}</Cell
+          >
         </Row>
       {/each}
     </Body>
@@ -37,9 +49,9 @@
     width: 100%;
 
     height: 70vh;
-     @media (min-width: 644px) and (max-width: 1202px) {
-             height: 30vh;
-        }
+    @media (min-width: 644px) and (max-width: 1202px) {
+      height: 30vh;
+    }
     overflow-y: auto;
   }
 </style>

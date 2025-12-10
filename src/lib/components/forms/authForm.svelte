@@ -10,16 +10,25 @@
 
     let usernameValidation = $derived.by(() => {
         if (username === "") {
-            return "Username is empty!";
+            return "Name is empty";
+        }
+        if (username.length < 2) {
+            return "Name is too short";
+        }
+        if (username.length > 30) {
+            return "Name is too long";
         }
     });
 
     let passwordValidation = $derived.by(() => {
         if (password === "") {
-            return "Password is empty!";
+            return "Password is empty";
         }
         if (password.length < 5) {
             return "Password is too short";
+        }
+        if (password.length > 30) {
+            return "Pawword is too long";
         }
     });
 
@@ -106,10 +115,10 @@
         gap: 2rem;
 
         @media (max-height: 650px) {
-           gap: 0;
+            gap: 0;
         }
 
-         @media (max-width: 643px) {
+        @media (max-width: 643px) {
             gap: 1rem;
         }
     }

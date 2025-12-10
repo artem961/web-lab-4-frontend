@@ -26,7 +26,7 @@
                     r: result.result.r,
                     result: result.result.result,
                     time: result.result.time,
-                    current_time: result.result.current_time,
+                    current_time: result.result.currentTime,
                 });
             }
         });

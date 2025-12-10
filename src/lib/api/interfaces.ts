@@ -10,7 +10,7 @@ export interface CheckResult {
     r: number
     result: boolean,
     time: string,
-    current_time: string
+    currentTime: string
 }
 
 export interface ApiError {
