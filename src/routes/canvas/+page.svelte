@@ -50,6 +50,7 @@
 
         @media (max-width: 643px) {
             flex-direction: column;
+             margin-top: 0;
         }
 
         @media (min-width: 644px) and (max-width: 1202px) {
