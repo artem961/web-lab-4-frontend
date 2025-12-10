@@ -5,9 +5,6 @@
     import { apiClient } from '$lib/api/apiClient';
     import { onMount } from "svelte";
     
-    onMount(()=>{
-         console.log(apiClient.checkHit({x: 0, y:0, r:0}));
-    })
    
 </script>
 

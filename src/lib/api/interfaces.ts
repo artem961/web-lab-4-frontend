@@ -21,7 +21,7 @@ export interface ApiError {
 
 export interface FetchResult<T> {
     result: T | null,
-    error: Error | null
+    error: ApiError | null
 }
 
 export interface AuthUserData {
@@ -36,6 +36,6 @@ export interface RegisterUserData {
 
 
 export interface AuthResult {
-    access_token: string,
-    token_type: string
+    accessToken: string,
+    tokenType: string
 }

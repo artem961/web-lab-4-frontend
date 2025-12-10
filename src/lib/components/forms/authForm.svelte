@@ -1,5 +1,5 @@
 <script>
-    import { register, login } from "$lib/api/api";
+    import { login } from "$lib/api/api";
     import TextInputField from "./inputs/textInputField.svelte";
     import Button, { Label } from "@smui/button";
     import Tooltip, { Wrapper } from "@smui/tooltip";
@@ -36,11 +36,6 @@
         let result = login({ username: username, password: password });
         result.then((result) => {
             if (result.result) {
-                let token = result.result.access_token;
-                let tokenType = result.result.token_type;
-
-                localStorage.setItem("access_token", token ?? "");
-                localStorage.setItem("token_type", tokenType ?? "");
                 window.location.href = "/canvas";
             } else if (result.error) {
                 errorMessage = result.error.error_message;
