@@ -36,7 +36,7 @@
   .table-wrapper {
     width: 100%;
 
-    height: 80vh;
+    height: 70vh;
      @media (min-width: 644px) and (max-width: 1202px) {
              height: 30vh;
         }

@@ -115,10 +115,6 @@
         padding: 5px;
         border-radius: var(--radius-xl);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-
-         @media (max-width: 643px) {
-           
-        }
     }
 
     .buttons {
@@ -135,5 +131,7 @@
         align-items: center;
         width: 100%;
         gap: 3rem;
+         @media (max-width: 643px) {
+        }
     }
 </style>

@@ -7,6 +7,7 @@
     import { onMount } from "svelte";
     import Button, { Label } from "@smui/button";
     import ResultsPlanes from "$lib/components/resultsPlanes.svelte";
+    import Header from "$lib/components/header.svelte";
 
     let x = $state(0);
     let y = $state(0);
@@ -20,7 +21,7 @@
         });
     });
 </script>
-
+<Header></Header>
 <div class="wrapper">
     <div class="canvas-column">
         <Canvas bind:r {results} />
@@ -45,6 +46,7 @@
         display: flex;
         gap: 1rem;
         flex-direction: row;
+        margin-top: 3rem;
 
         @media (max-width: 643px) {
             flex-direction: column;

@@ -1,10 +1,17 @@
 version: '3.9'
 
-services: 
+services:
   svelte:
     build:
       context: .
     container_name: lab4-svelte
-    ports: 
+    ports:
       - "3000:3000"
     restart: unless-stopped
+    networks:
+      - lab4-network
+
+networks:
+  lab4-network:
+    external: true
+    name: lab4-network
