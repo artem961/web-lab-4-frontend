@@ -13,29 +13,29 @@ export interface CheckResult {
     current_time: string
 }
 
-export interface Error{
+export interface ApiError {
     status_code: number,
     status_text: string,
     error_message: string
 }
 
-export interface FetchResult<T>{
+export interface FetchResult<T> {
     result: T | null,
     error: Error | null
 }
 
-export interface AuthUserData{
+export interface AuthUserData {
     username: string,
     password: string
 }
 
-export interface RegisterUserData{
+export interface RegisterUserData {
     username: string,
     password: string
 }
 
 
-export interface AuthResult{
+export interface AuthResult {
     access_token: string,
     token_type: string
 }

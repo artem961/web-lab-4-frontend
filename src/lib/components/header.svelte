@@ -32,7 +32,6 @@
         <div class="user-icon">👤</div>
     </div>
 </header>
-
 <style>
     .header {
         display: flex;

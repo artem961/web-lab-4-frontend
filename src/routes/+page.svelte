@@ -1,6 +1,14 @@
 <script>
     import Header from "$lib/components/header.svelte";
     import AuthForm from "$lib/components/forms/authForm.svelte";
+
+    import { apiClient } from '$lib/api/apiClient';
+    import { onMount } from "svelte";
+    
+    onMount(()=>{
+         console.log(apiClient.checkHit({x: 0, y:0, r:0}));
+    })
+   
 </script>
 
 <div class="wrapper">

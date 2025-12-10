@@ -158,3 +158,4 @@ function getAutorizationHeader(){
     let tokenType = localStorage.getItem("token_type");
     return tokenType + " " + token;
 }
+
