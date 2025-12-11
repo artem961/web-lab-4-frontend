@@ -15,21 +15,12 @@
 
     let valid = $state(false);
 
-    function sendPoint() {
-        let res = checkHit({ x: x, y: y, r: r });
+    async function sendPoint() {
+        let res = await checkHit({x, y, r});
 
-        res.then((result) => {
-            if (result.result) {
-                results.push({
-                    x: result.result.x,
-                    y: result.result.y,
-                    r: result.result.r,
-                    result: result.result.result,
-                    time: result.result.time,
-                    current_time: result.result.currentTime,
-                });
-            }
-        });
+       if (res.result){
+        results.push(res.result);
+       };
     }
 </script>
 
