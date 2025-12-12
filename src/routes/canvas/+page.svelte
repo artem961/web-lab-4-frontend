@@ -19,7 +19,20 @@
         res.then((data: FetchResult<CheckResult[]>) => {
             results = data.result ? data.result : [];
         });
+        pollingResults();
     });
+
+    async function pollingResults() {
+        try {
+            const data = await getAllResults();
+            results = data.result ? data.result : [];
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        
+        setTimeout(pollingResults, 5000);
+    }
+
 </script>
 <Header></Header>
 <div class="wrapper">

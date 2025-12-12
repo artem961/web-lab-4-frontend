@@ -3,7 +3,7 @@
     import InputButton from "./inputs/inputButton.svelte";
     import Button, { Group, Label } from "@smui/button";
     import InputButtonsGroup from "./inputs/inputButtonsGroup.svelte";
-    import { checkHit, deleteAllResults } from "$lib/api/api";
+    import { checkHit, deleteAllResults, getUserInfo } from "$lib/api/api";
     import Tooltip, { Wrapper } from "@smui/tooltip";
 
     let {
@@ -22,6 +22,7 @@
         results.push(res.result);
        };
     }
+
 </script>
 
 <div class="form">
@@ -71,7 +72,10 @@
                 variant="outlined   "
                 onclick={() => {
                     deleteAllResults();
-                    results = [];
+                    
+                    let user = JSON.parse(localStorage.getItem("user"));
+
+                   results = results.filter(element => element.user.username !== user.username);
                 }}
             >
                 <Label>Clear results</Label>

@@ -1,8 +1,9 @@
 <script lang="ts">
+    import { deleteResultById } from "$lib/api/api";
   import type { CheckResult } from "$lib/api/interfaces";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
 
-  const headers = ["№", "Result", "x", "y", "r", "Computing time", "Time"];
+  const headers = ["ID", "Result", "x", "y", "r", "Computing time", "Time", "User"];
 
   let { results = $bindable() }: { results: CheckResult[] } = $props();
 
@@ -25,9 +26,11 @@
       </Row>
     </Head>
     <Body>
-      {#each results as row, index}
-        <Row>
-          <Cell>{index + 1}</Cell>
+      {#each results as row}
+        <Row onclick={()=>{console.log(row.id);
+          deleteResultById(row.id);
+        }}>
+          <Cell>{row.id}</Cell>
           <Cell style={"color: " + (row.result?"rgb(92, 179, 116)": "rgb(214, 97, 95)")}>{row.result}</Cell>
           <Cell>{row.x}</Cell>
           <Cell>{row.y}</Cell>
@@ -38,6 +41,7 @@
               new Date(row.currentTime),
             )}</Cell
           >
+          <Cell>{row.user.username}</Cell>
         </Row>
       {/each}
     </Body>

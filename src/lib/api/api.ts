@@ -48,3 +48,9 @@ export async function getUserInfo(): Promise<FetchResult<User>> {
 
     return result;
 }
+
+export async function deleteResultById(id: number): Promise<FetchResult<void>>{
+    return await apiClient.fetchApi<void>("/dots/" + id, {
+        method: "DELETE"});
+
+}

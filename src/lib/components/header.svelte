@@ -9,6 +9,7 @@
     onMount(() => {
         getUserInfo().then((data) => {
             user = data.result;
+            localStorage.setItem("user", JSON.stringify(user));
         });
     });
 </script>

@@ -5,12 +5,14 @@ export interface Dot {
 }
 
 export interface CheckResult {
+    id: number,
     x: number,
     y: number,
     r: number
     result: boolean,
     time: string,
     currentTime: string
+    user: User
 }
 
 export interface ApiError {
