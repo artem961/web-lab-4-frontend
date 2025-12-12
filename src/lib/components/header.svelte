@@ -1,11 +1,15 @@
-<script>
+<script lang="ts">
+    import { getUserInfo } from "$lib/api/api";
+    import type { User } from "$lib/api/interfaces";
     import config from "$lib/app-config.json";
     import duck from "$lib/assets/duck.png";
     import { onMount } from "svelte";
 
-    let user = $state();
+    let user: User | null | undefined = $state();
     onMount(() => {
-        user = localStorage.getItem("access_token");
+        getUserInfo().then((data) => {
+            user = data.result;
+        });
     });
 </script>
 
@@ -28,7 +32,7 @@
     >
         <div class="user-data">
             {#if user}
-                <div class="user-name">User</div>
+                <div class="user-name">{user.username}</div>
             {:else}
                 <div class="user-name">Auth</div>
             {/if}

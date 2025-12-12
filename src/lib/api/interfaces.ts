@@ -39,3 +39,8 @@ export interface AuthResult {
     accessToken: string,
     tokenType: string
 }
+
+export interface User{
+    username: string,
+    id: number
+}

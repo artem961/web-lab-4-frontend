@@ -1,5 +1,5 @@
 import { apiClient } from "./apiClient";
-import type { AuthResult, AuthUserData, CheckResult, Dot, FetchResult, RegisterUserData } from "./interfaces";
+import type { AuthResult, AuthUserData, CheckResult, Dot, FetchResult, RegisterUserData, User } from "./interfaces";
 
 
 export async function checkHit(dot: Dot): Promise<FetchResult<CheckResult>> {
@@ -35,4 +35,16 @@ export async function register(user: RegisterUserData): Promise<FetchResult<Auth
 
 export async function logout(): Promise<FetchResult<void>> {
     return apiClient.logout();
+}
+
+export async function getUserInfo(): Promise<FetchResult<User>> {
+    let result = await apiClient.fetchApi<User>("/users/me", {
+        method: "GET"
+    });
+
+    if (result.error) {
+        console.warn("Failed to get user info!:", result.error);
+    }
+
+    return result;
 }
