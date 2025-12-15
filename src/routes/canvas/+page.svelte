@@ -9,6 +9,8 @@
     import ResultsPlanes from "$lib/components/resultsPlanes.svelte";
     import Header from "$lib/components/header.svelte";
     import { getAllResults } from "$lib/api/resultsApi";
+    import { FlatToast, ToastContainer, toasts } from "svelte-toasts";
+   
 
     let x = $state(0);
     let y = $state(0);
@@ -32,7 +34,6 @@
         setTimeout(pollingResults, 5000);
     }
 </script>
-
 <Header></Header>
 <div class="wrapper">
     <div class="canvas-column">

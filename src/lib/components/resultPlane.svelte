@@ -43,6 +43,9 @@
                 </Content>
             </div>
         </Card>
+        <Card>
+            <div class="plane"><Content style="padding: 0px"><Item style="font-size: large">User: {result.user.username}</Item></Content></div>
+        </Card>
     {/if}
 </div>
 
@@ -52,4 +55,5 @@
         flex-direction: row;
         justify-content: center;
     }
+
 </style>

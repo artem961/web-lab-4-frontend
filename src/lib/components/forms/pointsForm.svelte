@@ -5,6 +5,7 @@
     import InputButtonsGroup from "./inputs/inputButtonsGroup.svelte";
     import Tooltip, { Wrapper } from "@smui/tooltip";
     import { checkHit, deleteAllResults } from "$lib/api/resultsApi";
+    import { toasts } from "svelte-toasts";
 
     let {
         x = $bindable(),
@@ -16,13 +17,12 @@
     let valid = $state(false);
 
     async function sendPoint() {
-        let res = await checkHit({x, y, r});
+        let res = await checkHit({ x, y, r });
 
-       if (res.result){
-        results.push(res.result);
-       };
+        if (res.result) {
+            results.push(res.result);
+        }
     }
-
 </script>
 
 <div class="form">
@@ -63,7 +63,9 @@
                     <Label>Check</Label>
                 </Button>
             </div>
-            <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+            {#if !valid}
+                <Tooltip yPos="above" xPos="end">Enter correct values</Tooltip>
+            {/if}
         </Wrapper>
     </div>
     <div class="manage-buttons">
@@ -72,10 +74,12 @@
                 variant="outlined   "
                 onclick={() => {
                     deleteAllResults();
-                    
+
                     let user = JSON.parse(localStorage.getItem("user"));
 
-                   results = results.filter(element => element.user.username !== user.username);
+                    results = results.filter(
+                        (element) => element.user.username !== user.username,
+                    );
                 }}
             >
                 <Label>Clear results</Label>

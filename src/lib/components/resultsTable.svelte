@@ -1,9 +1,24 @@
 <script lang="ts">
   import type { CheckResult } from "$lib/api/interfaces";
-    import { deleteResultById } from "$lib/api/resultsApi";
+  import { deleteResultById } from "$lib/api/resultsApi";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
+  import Dialog, { Title, Content, Actions } from "@smui/dialog";
+  import Button, { Label } from "@smui/button";
+  import ResultPlane from "./resultPlane.svelte";
+  import NumberInputField from "./forms/inputs/numberInputField.svelte";
+  import { toasts } from "svelte-toasts";
+  import DeleteResultDialog from "./utils/deleteResultDialog.svelte";
 
-  const headers = ["ID", "Result", "x", "y", "r", "Computing time", "Time", "User"];
+  const headers = [
+    "ID",
+    "Result",
+    "x",
+    "y",
+    "r",
+    "Computing time",
+    "Time",
+    "User",
+  ];
 
   let { results = $bindable() }: { results: CheckResult[] } = $props();
 
@@ -15,12 +30,12 @@
     second: "numeric",
   };
 
-  $effect(()=>{
-    if (results){
-      console.log("results updated!")
-    }
-  })
+  let open = $state(false);
+  let selectedResult: CheckResult | undefined = $state();
 </script>
+
+<DeleteResultDialog bind:open bind:results bind:selectedResult
+></DeleteResultDialog>
 
 <div class="table-wrapper">
   <DataTable stickyHeader table$aria-label="People list" style="width: 100%">
@@ -33,11 +48,18 @@
     </Head>
     <Body>
       {#each results as row}
-        <Row onclick={()=>{console.log(row.id);
-          deleteResultById(row.id);
-        }}>
+        <Row
+          onclick={() => {
+            selectedResult = row;
+            open = true;
+          }}
+        >
           <Cell>{row.id}</Cell>
-          <Cell style={"color: " + (row.result?"rgb(92, 179, 116)": "rgb(214, 97, 95)")}>{row.result}</Cell>
+          <Cell
+            style={"color: " +
+              (row.result ? "rgb(92, 179, 116)" : "rgb(214, 97, 95)")}
+            >{row.result}</Cell
+          >
           <Cell>{row.x}</Cell>
           <Cell>{row.y}</Cell>
           <Cell>{row.r}</Cell>
