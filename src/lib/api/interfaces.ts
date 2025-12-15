@@ -23,7 +23,8 @@ export interface ApiError {
 
 export interface FetchResult<T> {
     result: T | null,
-    error: ApiError | null
+    error: ApiError | null,
+    headers?: Headers
 }
 
 export interface AuthUserData {

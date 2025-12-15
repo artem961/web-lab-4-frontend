@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { deleteResultById } from "$lib/api/api";
   import type { CheckResult } from "$lib/api/interfaces";
+    import { deleteResultById } from "$lib/api/resultsApi";
   import DataTable, { Head, Body, Row, Cell } from "@smui/data-table";
 
   const headers = ["ID", "Result", "x", "y", "r", "Computing time", "Time", "User"];
@@ -14,6 +14,12 @@
     minute: "numeric",
     second: "numeric",
   };
+
+  $effect(()=>{
+    if (results){
+      console.log("results updated!")
+    }
+  })
 </script>
 
 <div class="table-wrapper">

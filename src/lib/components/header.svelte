@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getUserInfo } from "$lib/api/api";
+    import { getUserInfo } from "$lib/api/userApi";
     import type { User } from "$lib/api/interfaces";
     import config from "$lib/app-config.json";
     import duck from "$lib/assets/duck.png";

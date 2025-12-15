@@ -3,8 +3,8 @@
     import InputButton from "./inputs/inputButton.svelte";
     import Button, { Group, Label } from "@smui/button";
     import InputButtonsGroup from "./inputs/inputButtonsGroup.svelte";
-    import { checkHit, deleteAllResults, getUserInfo } from "$lib/api/api";
     import Tooltip, { Wrapper } from "@smui/tooltip";
+    import { checkHit, deleteAllResults } from "$lib/api/resultsApi";
 
     let {
         x = $bindable(),

@@ -3,11 +3,11 @@
     import { CanvasController } from "./scripts/tools/canvas-controller";
     import { Plane } from "./scripts/tools/plane";
     import InputButtonsGroup from "../forms/inputs/inputButtonsGroup.svelte";
-    import { checkHit, getAllResults } from "$lib/api/api";
     import type { CheckResult, FetchResult } from "$lib/api/interfaces";
     import { createPoint } from "./scripts/interactiveObjects/point-object";
     import { devicePixelRatio } from "svelte/reactivity/window";
     import { Label } from "@smui/button";
+    import { checkHit } from "$lib/api/resultsApi";
 
     let { r = $bindable(), results = $bindable() } = $props();
 

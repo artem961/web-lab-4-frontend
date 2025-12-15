@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getUserInfo, logout } from "$lib/api/api";
+    import { getUserInfo, logout } from "$lib/api/userApi";
     import type { User } from "$lib/api/interfaces";
     import Button, { Label } from "@smui/button";
     import Card, { Actions, Content } from "@smui/card";

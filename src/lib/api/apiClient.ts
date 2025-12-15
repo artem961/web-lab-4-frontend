@@ -21,9 +21,10 @@ class ApiClient {
                 headers
             });
 
+
             return await this.handleResponse<T>(response, endpoint, options);
         } catch (error) {
-            return this.handleError(error);
+            return this.handleFetchError(error);
         }
     }
 
@@ -49,23 +50,16 @@ class ApiClient {
         if (response.ok) {
             try {
                 const data = response.status === 204 ? null : await response.json();
-                return { result: data, error: null };
+                return { result: data, error: null, headers: response.headers };
             } catch (error) {
-                if (response.status !== 204) {
-                    return {
-                        result: null,
-                        error: {
-                            status_code: response.status,
-                            status_text: response.statusText,
-                            error_message: 'Invalid JSON response'
-                        }
-                    };
-                } else {
-                    return {
-                        result: null,
-                        error: null
-                    };
-                }
+                return {
+                    result: null,
+                    error: {
+                        status_code: response.status,
+                        status_text: response.statusText,
+                        error_message: 'Invalid JSON response'
+                    }
+                };
             }
         } else if (response.status === 401) {
             if (endpoint === "/auth/refresh") {
@@ -97,7 +91,8 @@ class ApiClient {
                     status_code: response.status,
                     status_text: response.statusText,
                     error_message: await this.getErrorMessage(response)
-                }
+                },
+                headers: response.headers
             };
         }
     }
@@ -110,7 +105,7 @@ class ApiClient {
         }
     }
 
-    private handleError(error: unknown): FetchResult<never> {
+    private handleFetchError(error: unknown): FetchResult<never> {
         return {
             result: null,
             error: {

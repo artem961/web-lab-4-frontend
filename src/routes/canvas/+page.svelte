@@ -3,11 +3,12 @@
     import PointsForm from "$lib/components/forms/pointsForm.svelte";
     import Table from "$lib/components/resultsTable.svelte";
     import type { CheckResult, FetchResult } from "$lib/api/interfaces";
-    import { deleteAllResults, getAllResults, logout } from "$lib/api/api";
+    import { logout } from "$lib/api/userApi";
     import { onMount } from "svelte";
     import Button, { Label } from "@smui/button";
     import ResultsPlanes from "$lib/components/resultsPlanes.svelte";
     import Header from "$lib/components/header.svelte";
+    import { getAllResults } from "$lib/api/resultsApi";
 
     let x = $state(0);
     let y = $state(0);
@@ -15,25 +16,23 @@
 
     let results: CheckResult[] = $state([]);
     onMount(() => {
-        let res = getAllResults();
-        res.then((data: FetchResult<CheckResult[]>) => {
-            results = data.result ? data.result : [];
-        });
         pollingResults();
     });
 
     async function pollingResults() {
         try {
             const data = await getAllResults();
-            results = data.result ? data.result : [];
+            if (data.error?.status_code !== 304) {
+                results = data.result ? data.result : [];
+            }
         } catch (error) {
-            console.error('Error:', error);
+            console.error("Error:", error);
         }
-        
+
         setTimeout(pollingResults, 5000);
     }
-
 </script>
+
 <Header></Header>
 <div class="wrapper">
     <div class="canvas-column">
@@ -63,7 +62,7 @@
 
         @media (max-width: 643px) {
             flex-direction: column;
-             margin-top: 0;
+            margin-top: 0;
         }
 
         @media (min-width: 644px) and (max-width: 1202px) {
@@ -71,15 +70,15 @@
         }
     }
 
-    .table-display{
-         @media (max-width: 643px) {
-           display: none;
+    .table-display {
+        @media (max-width: 643px) {
+            display: none;
         }
     }
 
-    .plane-display{
-         @media (min-width: 644px) {
-           display: none;
+    .plane-display {
+        @media (min-width: 644px) {
+            display: none;
         }
     }
 

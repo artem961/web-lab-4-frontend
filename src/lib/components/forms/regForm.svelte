@@ -1,5 +1,5 @@
 <script>
-    import { register } from "$lib/api/api";
+    import { register } from "$lib/api/userApi";
     import Tooltip, { Wrapper } from "@smui/tooltip";
     import TextInputField from "./inputs/textInputField.svelte";
     import Button, { Label } from "@smui/button";
