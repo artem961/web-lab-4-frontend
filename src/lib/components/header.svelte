@@ -4,12 +4,20 @@
     import config from "$lib/app-config.json";
     import duck from "$lib/assets/duck.png";
     import { onMount } from "svelte";
+    import { toasts } from "svelte-toasts";
 
     let user: User | null | undefined = $state();
     onMount(() => {
         getUserInfo().then((data) => {
+            console.log(data)
+             if (data.error && data.error.status_code === 401 || data.error?.status_code == 400){
+                window.location.href = "/auth?unauthorized=true"
+            }
+        
+            if (data.result){
             user = data.result;
             localStorage.setItem("user", JSON.stringify(user));
+            } 
         });
     });
 </script>

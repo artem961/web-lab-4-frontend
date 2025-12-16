@@ -69,7 +69,7 @@
         let result = register({ username: username, password: password });
         result.then((result) => {
             if (result.result) {
-                window.location.href = "/canvas";
+                window.location.href = "/";
             } else if (result.error) {
                 errorMessage = result.error.error_message;
             } else {
@@ -137,12 +137,19 @@
         gap: 2rem;
         width: 100%;
 
+        margin-top: 4rem;   
+
         @media (max-height: 650px) {
             gap: 0;
         }
 
         @media (max-width: 643px) {
             gap: 1rem;
+            margin-top: 0;
+        }
+
+          @media (min-width: 644px) and (max-width: 1202px) {
+           margin-top: 2rem;
         }
     }
 

@@ -45,7 +45,7 @@
         let result = login({ username: username, password: password });
         result.then((result) => {
             if (result.result) {
-                window.location.href = "/canvas";
+                window.location.href = "/";
             } else if (result.error) {
                 errorMessage = result.error.error_message;
             } else {
@@ -113,6 +113,7 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        margin-top: 6rem;   
 
         @media (max-height: 650px) {
             gap: 0;
@@ -120,6 +121,11 @@
 
         @media (max-width: 643px) {
             gap: 1rem;
+            margin-top: 2rem;
+        }
+
+          @media (min-width: 644px) and (max-width: 1202px) {
+           margin-top: 4rem;
         }
     }
 

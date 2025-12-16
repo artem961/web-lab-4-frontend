@@ -2,9 +2,19 @@
 	import "$lib/styles/main.scss";
 	import config from "$lib/app-config.json";
 	import duck from "$lib/assets/duck.png";
-	import { FlatToast, ToastContainer } from "svelte-toasts";
+	import { FlatToast, ToastContainer, toasts } from "svelte-toasts";
+    import { onMount } from "svelte";
 
 	let { children } = $props();
+	
+
+	onMount(()=>{
+		let urlParams = new URLSearchParams(window.location.search);
+
+		if (urlParams.get("unauthorized") === "true"){
+			toasts.error("Please sign in")
+		}
+	})
 </script>
 
 <svelte:head>
