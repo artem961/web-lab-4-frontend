@@ -1,5 +1,5 @@
 {
-    "app_name": "Labwork 4 actions",
+    "app_name": "Labwork 4",
     "author_name": "Khrabrov Artem",
-    "backend_host": "http://localhost:8080/backend/api/"
+    "backend_host": "http://0.0.0.0:8080/backend/api/"
 }
