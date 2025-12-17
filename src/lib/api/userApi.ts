@@ -1,4 +1,4 @@
-import { apiClient } from "./apiClient";
+import { apiClient } from "./apiClient.svelte";
 import type { AuthResult, AuthUserData, CheckResult, Dot, FetchResult, RegisterUserData, User } from "./interfaces";
 
 

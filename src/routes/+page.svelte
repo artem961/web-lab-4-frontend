@@ -10,11 +10,11 @@
     import Header from "$lib/components/header.svelte";
     import { getAllResults } from "$lib/api/resultsApi";
     import { FlatToast, ToastContainer, toasts } from "svelte-toasts";
-   
 
     let x = $state(0);
     let y = $state(0);
     let r = $state(1);
+    let isPollingActive = $state(true);
 
     let results: CheckResult[] = $state([]);
     onMount(() => {
@@ -24,16 +24,21 @@
     async function pollingResults() {
         try {
             const data = await getAllResults();
-            if (data.error?.status_code !== 304) {
+
+            if (data.error === null) {
                 results = data.result ? data.result : [];
+            } else if (data.error.status_code !== 304) {
+                isPollingActive = false;
             }
         } catch (error) {
             console.error("Error:", error);
         }
-
-        setTimeout(pollingResults, 5000);
+        if (isPollingActive === true) {
+            setTimeout(pollingResults, 5000);
+        }
     }
 </script>
+
 <Header></Header>
 <div class="wrapper">
     <div class="canvas-column">

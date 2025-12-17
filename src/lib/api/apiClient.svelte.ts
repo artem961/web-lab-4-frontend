@@ -1,3 +1,4 @@
+import { goto } from "$app/navigation";
 import type {
     CheckResult, Dot, FetchResult,
     AuthUserData, AuthResult, RegisterUserData,
@@ -79,6 +80,7 @@ class ApiClient {
                 return this.fetchApi<T>(endpoint, options);
             } else {
                 this.clearAuthData();
+                window.location.href = "/auth?unauthorized=true";
                 return {
                     result: null,
                     error: refreshResult.error

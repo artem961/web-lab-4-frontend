@@ -6,6 +6,8 @@
     import Tooltip, { Wrapper } from "@smui/tooltip";
     import { checkHit, deleteAllResults } from "$lib/api/resultsApi";
     import { toasts } from "svelte-toasts";
+    import Dialog, { Title } from "@smui/dialog";
+    import { Actions, Content } from "@smui/card";
 
     let {
         x = $bindable(),
@@ -23,7 +25,49 @@
             results.push(res.result);
         }
     }
+
+    let open = $state(false);
+    let count = $derived.by(()=>{
+        if (open === true){
+            let user = JSON.parse(localStorage.getItem("user"));
+            return results.filter(
+                    (element) => element.user.username === user.username,
+                ).length;
+        }
+    })
 </script>
+
+<Dialog
+    bind:open
+    aria-labelledby="simple-title"
+    aria-describedby="simple-content"
+>
+    <Title id="simple-title">Delete all your results?</Title>
+    <Content id="simple-content">You have {count} results</Content>
+    <Actions>
+        <Button variant="raised" onclick={()=>{open=false}}>
+            <Label>No</Label>
+        </Button>
+        <Button
+            variant="outlined"
+            onclick={() => {
+                deleteAllResults();
+
+                let user = JSON.parse(localStorage.getItem("user"));
+
+                
+                toasts.success("Delete " + $state.snapshot(count) + " results")
+                results = results.filter(
+                    (element) => element.user.username !== user.username,
+                );
+                
+                open=false
+            }}
+        >
+            <Label>Yes</Label>
+        </Button>
+    </Actions>
+</Dialog>
 
 <div class="form">
     <div class="title">
@@ -73,13 +117,7 @@
             <Button
                 variant="outlined   "
                 onclick={() => {
-                    deleteAllResults();
-
-                    let user = JSON.parse(localStorage.getItem("user"));
-
-                    results = results.filter(
-                        (element) => element.user.username !== user.username,
-                    );
+                    open = true;
                 }}
             >
                 <Label>Clear results</Label>
