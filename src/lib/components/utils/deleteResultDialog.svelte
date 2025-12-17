@@ -4,7 +4,8 @@
     import Button, { Label } from "@smui/button";
     import { deleteResultById } from "$lib/api/resultsApi";
     import { toasts } from "svelte-toasts";
-    import type { CheckResult } from "$lib/api/interfaces";
+    import type { CheckResult, User } from "$lib/api/interfaces";
+    import { onMount } from "svelte";
 
     let {
         results = $bindable(),
@@ -32,6 +33,21 @@
             }
         });
     }
+
+    let user: User;
+    let blockButton: boolean = $derived.by(() => {
+        try {
+            if (typeof localStorage === "undefined") return false;
+
+            const userData = localStorage.getItem("user");
+            if (!userData || !selectedResult) return false;
+
+            const localUser = JSON.parse(userData);
+            return localUser && localUser.id !== selectedResult.user.id;
+        } catch {
+            return false;
+        }
+    });
 </script>
 
 <Dialog
@@ -50,6 +66,7 @@
         <Button
             variant="outlined"
             onclick={() => deleteResults(selectedResult?.id)}
+            disabled={blockButton}
         >
             <Label>Delete</Label>
         </Button>
