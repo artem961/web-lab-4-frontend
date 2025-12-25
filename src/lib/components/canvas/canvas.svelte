@@ -61,7 +61,7 @@
                 const response = await checkHit({ x, y, r });
 
                 if (response.result) {
-                    addPointToResults(response.result);
+                   // addPointToResults(response.result);
                 }
             } catch (error) {
                 console.error("Error checking hit:", error);
