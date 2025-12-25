@@ -17,6 +17,14 @@ export async function getAllResults(): Promise<FetchResult<CheckResult[]>> {
     return result;
 }
 
+export async function longPollAllResults(): Promise<FetchResult<CheckResult[]>> {
+    let result = apiClient.fetchApi<CheckResult[]>("/dots/all/poll", {
+    });
+
+    return result;
+}
+
+
 export async function checkHit(dot: Dot): Promise<FetchResult<CheckResult>> {
     return apiClient.fetchApi<CheckResult>("/dots/check", {
         method: "POST",

@@ -8,7 +8,7 @@
     import Button, { Label } from "@smui/button";
     import ResultsPlanes from "$lib/components/resultsPlanes.svelte";
     import Header from "$lib/components/header.svelte";
-    import { getAllResults } from "$lib/api/resultsApi";
+    import { getAllResults, longPollAllResults } from "$lib/api/resultsApi";
     import { FlatToast, ToastContainer, toasts } from "svelte-toasts";
 
     let x = $state(0);
@@ -18,23 +18,33 @@
 
     let results: CheckResult[] = $state([]);
     onMount(() => {
+        const data = getAllResults();
+        data.then((resp)=>{
+            if (resp.result !== null){
+                results = results = resp.result ? resp.result : [];
+            } else if (resp.error?.status_code !== 204){
+                toasts.error("error fetching results")
+            }
+        })
+
         pollingResults();
     });
 
+
     async function pollingResults() {
         try {
-            const data = await getAllResults();
+            const data = await longPollAllResults();
 
-            if (data.error === null) {
-                results = data.result ? data.result : [];
-            } else if (data.error.status_code !== 304) {
+            if (data.error === null && data.result !== null) {
+                results = data.result;
+            } else if (data.error.status_code !== 204) {
                 isPollingActive = false;
             }
         } catch (error) {
             console.error("Error:", error);
         }
         if (isPollingActive === true) {
-            setTimeout(pollingResults, 5000);
+            pollingResults();
         }
     }
 </script>

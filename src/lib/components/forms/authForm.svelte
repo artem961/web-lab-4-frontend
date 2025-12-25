@@ -28,7 +28,7 @@
             return "Password is too short";
         }
         if (password.length > 30) {
-            return "Pawword is too long";
+            return "Paswword is too long";
         }
     });
 
