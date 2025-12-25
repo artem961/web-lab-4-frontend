@@ -14,7 +14,6 @@
     let x = $state(0);
     let y = $state(0);
     let r = $state(1);
-    let isPollingActive = $state(true);
 
     let results: CheckResult[] = $state([]);
     onMount(() => {
@@ -37,14 +36,12 @@
 
             if (data.error === null && data.result !== null) {
                 results = data.result;
-            } else if (data.error.status_code !== 204) {
-                isPollingActive = false;
+            } else if (data.error?.status_code !== 204) {
+                
             }
+             pollingResults();
         } catch (error) {
             console.error("Error:", error);
-        }
-        if (isPollingActive === true) {
-            pollingResults();
         }
     }
 </script>
