@@ -1,5 +1,5 @@
 {
     "app_name": "Labwork 4",
     "author_name": "Khrabrov Artem",
-    "backend_host": "http://lab4-backend-service/backend/api/"
+    "backend_host": "http://wildfly:8080/backend/api/"
 }
