@@ -48,7 +48,8 @@ jobs:
     - name: Deploy to Kubernetes
       run: |
         kubectl set image deployment/lab4-front \
-          lab4-front-container=${{ secrets.DOCKER_USERNAME }}/lab4-svelte:${{ github.sha }}
+          lab4-front-container=${{ secrets.DOCKER_USERNAME }}/lab4-svelte:${{ github.sha }} \
+          --namespace=lab4
       
    
 
